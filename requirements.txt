@@ -1,0 +1,10 @@
+mlxtend
+pandas
+numpy
+scikit-learn
+matplotlib
+networkx
+jupyter
+ipywidgets
+moviepy
+pillow
