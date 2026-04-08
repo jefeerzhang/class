@@ -1,3 +1,28 @@
+---
+marp: true
+theme: gaia
+class: lead
+paginate: true
+backgroundColor: #fff
+backgroundImage: url('https://marp.app/assets/hero-background.jpg')
+style: |
+  section {
+    font-family: 'Times New Roman', 'SimSun';
+  }
+  h1 {
+    color: #2c3e50;
+    font-size: 1.5em;
+  }
+  h2 {
+    color: #34495e;
+    border-bottom: 2px solid #3498db;
+  }
+  footer {
+    font-size: 0.5em;
+    color: #7f8c8d;
+  }
+---
+
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.

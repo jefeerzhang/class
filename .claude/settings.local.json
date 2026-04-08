@@ -20,7 +20,12 @@
       "Bash(git add:*)",
       "Bash(rm -f \"~allenexplorer~.ala\")",
       "Bash(git reset:*)",
-      "Bash(git commit -m ':*)"
+      "Bash(git commit -m ':*)",
+      "Bash(git remote:*)",
+      "Bash(git push:*)",
+      "Bash(mkdir -p ~/.ssh)",
+      "Bash(ssh-keyscan github.com)",
+      "Bash(marp:*)"
     ]
   }
 }
