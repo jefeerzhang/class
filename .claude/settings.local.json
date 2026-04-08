@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(pip install:*)",
+      "Bash(ls -la *.md *.png)",
+      "Bash(mv 关联算法/generate_customer_data.py  关联算法/scripts/01_data/)",
+      "Bash(mv 关联算法/apriori_test.py            关联算法/scripts/02_analysis/)",
+      "Bash(mv 关联算法/finance_analysis.py         关联算法/scripts/02_analysis/)",
+      "Bash(mv 关联算法/finance_example.py          关联算法/scripts/02_analysis/)",
+      "Bash(mv 关联算法/fpgrowth_analysis.py        关联算法/scripts/02_analysis/)",
+      "Bash(mv 关联算法/*.md 关联算法/docs/)",
+      "Bash(mv 关联算法/*.png 关联算法/images/)",
+      "Bash(mv 关联算法/*.ipynb 关联算法/notebooks/)",
+      "Bash(mv 关联算法/customer_products.csv  关联算法/data/customer_products_static.csv)",
+      "Bash(mv customer_products.csv           关联算法/data/customer_products_temporal.csv)",
+      "Bash(gh auth:*)",
+      "Bash(git status:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(rm -f \"~allenexplorer~.ala\")",
+      "Bash(git reset:*)",
+      "Bash(git commit -m ':*)"
+    ]
+  }
+}
