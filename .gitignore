@@ -23,3 +23,7 @@ Thumbs.db
 desktop.ini
 
 .claude/settings.local.json
+.qwen/settings.json
+
+*.tmp.html
+*.orig

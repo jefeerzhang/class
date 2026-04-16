@@ -10,7 +10,18 @@
       "Read(C:\\Users\\jefeer\\.qwen/**)",
       "Bash(move *)",
       "Bash(git *)",
-      "Bash(copy *)"
+      "Bash(copy *)",
+      "Read(C:\\baidunetdiskdownload\\公众号福利\\粉丝福利Skills\\recommended_skills\\fix-chinese/**)",
+      "Bash(explorer *)",
+      "Bash(python *)",
+      "Bash(findstr *)",
+      "Read(C:\\Users\\jefeer\\Nutstore\\1\\我的坚果云\\论文备份\\教材\\金融学类\\Handbook-of-the-Economics-of-Finance2013e(Chapter1-11)/**)",
+      "WebSearch",
+      "WebFetch(www.liuyanecon.com)",
+      "WebFetch(finance.wharton.upenn.edu)",
+      "Bash(pip install *)",
+      "Bash(npm *)",
+      "Bash(rmdir *)"
     ]
   },
   "$version": 3

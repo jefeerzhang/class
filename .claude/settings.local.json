@@ -25,7 +25,18 @@
       "Bash(git push:*)",
       "Bash(mkdir -p ~/.ssh)",
       "Bash(ssh-keyscan github.com)",
-      "Bash(marp:*)"
+      "Bash(marp:*)",
+      "Bash(pandoc --version)",
+      "Bash(wkhtmltopdf --version)",
+      "Bash(xelatex --version)",
+      "Bash(pdflatex --version)",
+      "Bash(npx --yes md-to-pdf --help)",
+      "Bash(npx --yes md-to-pdf \"基金聚类分析报告.md\")",
+      "WebSearch",
+      "Bash(ln *)",
+      "Bash(npx *)",
+      "Bash(start *)",
+      "Bash(git *)"
     ]
   }
 }
