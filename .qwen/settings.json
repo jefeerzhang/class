@@ -5,7 +5,12 @@
       "Bash(xcopy *)",
       "Bash(powershell *)",
       "Bash(npx *)",
-      "Bash(dir *)"
+      "Bash(dir *)",
+      "Bash(git push)",
+      "Read(C:\\Users\\jefeer\\.qwen/**)",
+      "Bash(move *)",
+      "Bash(git *)",
+      "Bash(copy *)"
     ]
   },
   "$version": 3
