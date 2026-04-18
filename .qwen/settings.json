@@ -21,7 +21,13 @@
       "WebFetch(finance.wharton.upenn.edu)",
       "Bash(pip install *)",
       "Bash(npm *)",
-      "Bash(rmdir *)"
+      "Bash(rmdir *)",
+      "Bash(pip show *)",
+      "Bash(pip list)",
+      "Bash(where *)",
+      "Bash(qwen *)",
+      "Bash(chcp *)",
+      "Bash(start *)"
     ]
   },
   "$version": 3
