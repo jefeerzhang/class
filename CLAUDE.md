@@ -91,6 +91,14 @@ opencode/
 ├── behavioral_finance/         # 行为公司金融项目
 │   ├── docs/                   # 文档
 │   └── slides/                 # Marp 幻灯片
+├── regression_analysis/        # 回归分析项目
+│   ├── data/                   # 数据集
+│   ├── docs/                   # 文档
+│   ├── notebooks/              # Jupyter 笔记本
+│   └── scripts/                # Python 脚本
+├── cluster_analysis/           # 聚类分析项目
+│   ├── docs/                   # 文档（聚类算法指南）
+│   └── （其他目录待创建）
 ├── CLAUDE.md                   # 项目说明
 ├── README.md                   # 项目介绍
 └── requirements.txt            # Python 依赖
@@ -139,6 +147,18 @@ marp behavioral_finance/slides/prospect_theory_slides.md --output behavioral_fin
 
 # 转换为 PDF
 marp behavioral_finance/slides/prospect_theory_slides.md --pdf
+```
+
+### 聚类分析项目
+
+聚类分析项目包含常用聚类算法的通俗解释和实现，文档在 `cluster_analysis/docs/` 目录。
+
+```bash
+# 查看聚类算法通俗指南
+cat cluster_analysis/docs/聚类算法通俗指南.md
+
+# 或在浏览器中查看（如果支持）
+# code cluster_analysis/docs/聚类算法通俗指南.md
 ```
 
 ## Key Libraries
