@@ -1,6 +1,6 @@
 import re
 
-with open('slides_regression-analysis/05_final/presentation.md', 'r', encoding='utf-8') as f:
+with open('../05_final/presentation.md', 'r', encoding='utf-8') as f:
     lines = f.readlines()
 
 # 找到所有分隔符行

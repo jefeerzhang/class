@@ -36,7 +36,8 @@
       "Bash(ln *)",
       "Bash(npx *)",
       "Bash(start *)",
-      "Bash(git *)"
+      "Bash(git *)",
+      "Bash(grep -E \"\\(\\\\.py$|\\\\.txt$|\\\\.md$\\)\")"
     ]
   }
 }

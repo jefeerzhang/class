@@ -1,5 +1,5 @@
 import re
-with open('slides_regression-analysis/05_final/presentation.md', 'r', encoding='utf-8') as f:
+with open('../05_final/presentation.md', 'r', encoding='utf-8') as f:
     content = f.read()
 # 找到第一个---之后的内容
 parts = content.split('---')

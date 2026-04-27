@@ -1,43 +1,12 @@
 import re
 
-with open('slides_regression-analysis/05_final/presentation.md', 'r', encoding='utf-8') as f:
+# 读取文件
+with open('../05_final/presentation.md', 'r', encoding='utf-8') as f:
     content = f.read()
 
-# 找到第一个---之后的内容（跳过frontmatter）
-# frontmatter以---开始和结束
-first_separator = content.find('---')
-if first_separator == -1:
-    print("没有找到分隔符")
-    exit()
-
-# 跳过第一个frontmatter
-after_frontmatter = content[first_separator+3:]  # 跳过---
-
-# 现在分割页面（每个页面以---开始）
-# 使用正则表达式：\n---\n
-pages_raw = re.split(r'\n---\n', after_frontmatter)
-print(f"原始页面数: {len(pages_raw)}")
-
-# 合并可能被错误分割的页面（例如表格内的---）
-pages = []
-current_page = []
-for part in pages_raw:
-    part = part.strip()
-    if not part:
-        continue
-    # 检查是否是新的页面开始（通常以##开头）
-    if part.startswith('## ') or part.startswith('# ') or part.startswith('**重点'):
-        if current_page:
-            pages.append('\n'.join(current_page))
-            current_page = []
-        current_page.append(part)
-    else:
-        # 继续当前页面
-        current_page.append(part)
-if current_page:
-    pages.append('\n'.join(current_page))
-
-print(f"合并后页面数: {len(pages)}")
+# 分割页面（按---分隔）
+pages = re.split(r'\n---\n', content)
+print(f"总页数: {len(pages)}")
 
 # 分析每页
 results = []
@@ -63,9 +32,13 @@ for i, page in enumerate(pages, 1):
             if re.match(r'^\s{2,}\d+\.\s', line):
                 nested_lists += 1
     
-    # 计算最长行的字符数
+    # 计算最长行的字符数（包括空格）
     max_line_len = 0
     for line in content_lines:
+        # 忽略Marp frontmatter和样式行
+        if line.startswith('marp:') or line.startswith('theme:') or line.startswith('class:') or line.startswith('paginate:') or line.startswith('header:') or line.startswith('backgroundColor:') or line.startswith('backgroundImage:') or line.startswith('style:') or line.startswith('---') or line.startswith('#') or line.startswith('|') or line.startswith('$$'):
+            # 仍然计算长度
+            pass
         line_len = len(line)
         if line_len > max_line_len:
             max_line_len = line_len
@@ -74,7 +47,7 @@ for i, page in enumerate(pages, 1):
     paragraphs = []
     current_para = []
     for line in content_lines:
-        # 跳过列表项、表格行、标题
+        # 跳过列表项、表格行、标题、Marp指令
         if re.match(r'^\s*[-*]\s', line) or re.match(r'^\s*\d+\.\s', line) or line.startswith('|') or line.startswith('#') or line.startswith('$$') or line.startswith('**') or line.startswith('---'):
             if current_para:
                 paragraphs.append('\n'.join(current_para))
@@ -132,7 +105,7 @@ for i, page in enumerate(pages, 1):
 print('| 页码 | 行数 | 最长行 | 列表项 | 密度评级 | 状态 |')
 print('|------|------|--------|--------|----------|------|')
 for r in results:
-    status = 'OK' if r['density'] == '低' else ('WARN' if r['density'] == '中' else 'ERROR')
+    status = 'OK' if r['density'] == '低' else ('WARN' if r['density'] == '高' else 'NOTE')
     print(f"| {r['page']} | {r['lines']} | {r['max_len']}字符 | {r['list_items']}项 | {r['density']} | {status} |")
 
 print("\n高密度页面（需处理）:")
@@ -162,3 +135,15 @@ for i, page in enumerate(pages, 1):
         if len(para_lines) > 3:
             print(f"- 第{i}页，段落{j+1}：{len(para_lines)}行")
             print(f"  内容：{para[:100]}...")
+
+# 检查嵌套列表深度
+print("\n嵌套列表深度检查（>2层）:")
+for i, page in enumerate(pages, 1):
+    lines = page.strip().split('\n')
+    content_lines = [line for line in lines if line.strip() != '']
+    for line in content_lines:
+        # 检查缩进级别
+        if re.match(r'^\s*[-*]\s', line) or re.match(r'^\s*\d+\.\s', line):
+            indent = len(line) - len(line.lstrip())
+            if indent > 4:  # 假设2个空格为一层
+                print(f"- 第{i}页，行：{line.strip()}，缩进{indent}空格")
