@@ -2,9 +2,6 @@
 marp: true
 theme: beam
 class: lead
-paginate: true
-header: '回归分析及其应用'
-footer: "金融数据分析"
 style: |
   section {
     font-family: "Helvetica Neue", "Helvetica", "Arial", "PingFang SC", "SimSun", sans-serif;
@@ -422,12 +419,4 @@ $$PD = N\left(\frac{\log(D/V) - (\mu - \frac{1}{2}\sigma^2)T}{\sigma\sqrt{T}}\ri
 - **模型监控：** 定期评估预测性能，监控模型漂移
 - **可解释性：** Logistic回归用发生比比解释
 
----
 
-# 参考文献
-
-1. Hosmer, D. W., Lemeshow, S. (2013). *Applied Logistic Regression*. Wiley.
-2. Agresti, A. (2010). *Analysis of Ordinal Categorical Data*. Wiley.
-3. Hastie, T., Tibshirani, R. (2009). *The Elements of Statistical Learning*. Springer.
-4. James, G. et al. (2021). *An Introduction to Statistical Learning*. Springer.
-5. Fama, E. F., French, K. R. (1993). *Journal of Financial Economics*, 33(1), 3-56.
