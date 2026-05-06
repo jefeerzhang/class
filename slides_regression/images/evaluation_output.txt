@@ -1,0 +1,13 @@
+=== 分类模型评估指标 ===
+
+准确率 (Accuracy):   0.6667
+精确率 (Precision):  0.3438
+召回率 (Recall):     0.7333
+F1 分数:             0.4681
+AUC:                 0.7258
+
+=== 混淆矩阵 ===
+True Negatives  (TN): 78
+False Positives (FP): 42
+False Negatives (FN): 8
+True Positives  (TP): 22

@@ -1,0 +1,30 @@
+/* gaia theme - 自定义主题 */
+:root {
+  -- gaia-current-slide-number: #2c3e50;
+}
+
+section {
+  font-family: 'Times New Roman', 'SimSun', serif;
+  background-color: #fff;
+  background-image: url('https://marp.app/assets/hero-background.jpg');
+}
+
+h1 {
+  color: #2c3e50;
+  font-size: 1.5em;
+}
+
+h2 {
+  color: #34495e;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 0.3em;
+}
+
+footer {
+  font-size: 0.5em;
+  color: #7f8c8d;
+}
+
+<style>
+/* Marp core theme */
+</style>

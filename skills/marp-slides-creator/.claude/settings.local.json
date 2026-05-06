@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx @marp-team/marp-cli:*)",
+      "Bash(npx @marp-team/marp-cli@latest:*)",
+      "Bash(marp:*)",
+      "Bash(ls:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}

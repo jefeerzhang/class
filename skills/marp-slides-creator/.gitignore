@@ -1,0 +1,35 @@
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# macOS folder attributes
+.Spotlight-V100
+.Trashes
+
+# macOS resource forks
+Icon?
+
+# Marp generated outputs
+slides_*/
+*.html
+*.pdf
+
+# Review artifacts
+review_*.txt
+
+# Node.js
+node_modules/
+package-lock.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.bak
+~*

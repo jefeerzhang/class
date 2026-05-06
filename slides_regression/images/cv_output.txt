@@ -1,0 +1,3 @@
+Ridge 最优 alpha: 0.4037
+Lasso 最优 alpha: 0.3854
+Elastic Net 最优 alpha: 0.0139, l1_ratio: 0.5
