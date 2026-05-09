@@ -1,0 +1,1624 @@
+
+  ___  ____  ____  ____  ____ ®
+ /__    /   ____/   /   ____/      StataNow 19.5
+___/   /   /___/   /   /___/       MP—Parallel Edition
+
+ Statistics and Data Science       Copyright 1985-2025 StataCorp LLC
+                                   StataCorp
+                                   4905 Lakeway Drive
+                                   College Station, Texas 77845 USA
+                                   800-782-8272        https://www.stata.com
+                                   979-696-4600        service@stata.com
+
+Stata license: 114514-student 64-core lab perpetual
+Serial number: 9223372036854775807
+  Licensed to: zhangjian
+               sicau
+
+Notes:
+      1. Stata is running in batch mode.
+      2. Unicode is supported; see help unicode_advice.
+      3. More than 2 billion observations are allowed; see help obs_advice.
+      4. Maximum number of variables is set to 5,000 but can be increased;
+          see help set_maxvar.
+
+. do C:/Users/jefeer/AppData/Local/Temp/stata_batch__regenerate_images.do 
+
+. capture log close
+
+. log using "C:\Users\jefeer\Downloads\opencode\.statamcp\stata-mcp-log\2026050
+> 9134220.log", replace
+(file
+    C:\Users\jefeer\Downloads\opencode\.statamcp\stata-mcp-log\20260509134220
+    > .log not found)
+-------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\jefeer\Downloads\opencode\.statamcp\stata-mcp-log\2026050
+> 9134220.log
+  log type:  text
+ opened on:   9 May 2026, 13:42:21
+
+. do "C:\Users\jefeer\Downloads\opencode\skills\coefplot\docs\regenerate_images
+> .do"
+
+. * coefplot 技能配图重制脚本
+. * 目标：统一竖排布局，中英文双语支持
+. * 输出到 docs/images_en/ 和 docs/images_zh/
+. 
+. capture mkdir "skills/coefplot/docs/images_en"
+
+. capture mkdir "skills/coefplot/docs/images_zh"
+
+. cd "skills/coefplot/docs"
+C:\Users\jefeer\Downloads\opencode\skills\coefplot\docs
+
+. 
+. capture ssc install coefplot, replace
+
+. capture ssc install estout, replace
+
+. capture ssc install center, replace
+
+. 
+. * ============================================================
+. * 全局字体设置：让 Stata 图形更美观
+. * ============================================================
+. graph set window fontface "Microsoft YaHei"
+
+. 
+. sysuse auto, clear
+(1978 automobile data)
+
+. 
+. * ---- 中文标签替换 ----
+. label variable mpg "每加仑英里数"
+
+. label variable trunk "行李箱容积"
+
+. label variable length "车长"
+
+. label variable turn "转弯半径"
+
+. label variable weight "车重"
+
+. label variable price "价格"
+
+. label variable foreign "是否进口"
+
+. label define yn 0 "国产" 1 "进口", modify
+
+. label values foreign yn
+
+. label variable rep78 "维修记录"
+
+. label define rep78 1 "很差" 2 "较差" 3 "一般" 4 "较好" 5 "很好", modify
+
+. label values rep78 rep78
+
+. 
+. * ============================================================
+. * 场景 0：eststo 四模型对比（竖排）
+. * ============================================================
+. sysuse auto, clear
+(1978 automobile data)
+
+. label variable mpg "每加仑英里数"
+
+. label variable trunk "行李箱容积"
+
+. label variable length "车长"
+
+. label variable turn "转弯半径"
+
+. label variable price "价格"
+
+. 
+. eststo clear
+
+. eststo m1: regress price mpg
+
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(1, 72)        =     20.26
+       Model |   139449474         1   139449474   Prob > F        =    0.0000
+    Residual |   495615923        72  6883554.48   R-squared       =    0.2196
+-------------+----------------------------------   Adj R-squared   =    0.2087
+       Total |   635065396        73  8699525.97   Root MSE        =    2623.7
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -238.8943   53.07669    -4.50   0.000    -344.7008   -133.0879
+       _cons |   11253.06   1170.813     9.61   0.000     8919.088    13587.03
+------------------------------------------------------------------------------
+
+. eststo m2: regress price mpg trunk
+
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(2, 71)        =     10.14
+       Model |   141126459         2  70563229.4   Prob > F        =    0.0001
+    Residual |   493938937        71  6956886.44   R-squared       =    0.2222
+-------------+----------------------------------   Adj R-squared   =    0.2003
+       Total |   635065396        73  8699525.97   Root MSE        =    2637.6
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -220.1649   65.59262    -3.36   0.001    -350.9529    -89.3769
+       trunk |   43.55851   88.71884     0.49   0.625    -133.3418    220.4589
+       _cons |   10254.95   2349.084     4.37   0.000      5571.01    14938.89
+------------------------------------------------------------------------------
+
+. eststo m3: regress price mpg trunk length
+
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(3, 70)        =      6.93
+       Model |   145463928         3    48487976   Prob > F        =    0.0004
+    Residual |   489601468        70  6994306.69   R-squared       =    0.2291
+-------------+----------------------------------   Adj R-squared   =    0.1960
+       Total |   635065396        73  8699525.97   Root MSE        =    2644.7
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |   -173.708   88.35026    -1.97   0.053     -349.917    2.501039
+       trunk |  -.8546923   105.3287    -0.01   0.994    -210.9262    209.2168
+      length |   21.40414   27.18016     0.79   0.434    -32.80497    75.61325
+       _cons |   5853.993   6064.657     0.97   0.338    -6241.585    17949.57
+------------------------------------------------------------------------------
+
+. eststo m4: regress price mpg trunk length turn
+
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(4, 69)        =      5.79
+       Model |   159570047         4  39892511.8   Prob > F        =    0.0004
+    Residual |   475495349        69  6891236.94   R-squared       =    0.2513
+-------------+----------------------------------   Adj R-squared   =    0.2079
+       Total |   635065396        73  8699525.97   Root MSE        =    2625.1
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -186.8417   88.17601    -2.12   0.038     -362.748   -10.93533
+       trunk |  -12.72642   104.8785    -0.12   0.904    -221.9534    196.5005
+      length |   54.55294   35.56248     1.53   0.130    -16.39227    125.4981
+        turn |  -200.3248   140.0166    -1.43   0.157    -479.6502    79.00066
+       _cons |   8009.893   6205.538     1.29   0.201    -4369.817     20389.6
+------------------------------------------------------------------------------
+
+. 
+. coefplot m1 m2 m3 m4, vertical drop(_cons) yline(0) ///
+>     plotlabels("m1" "m2" "m3" "m4") legend(rows(1) position(6) colfirst) ///
+>     xtitle("回归系数") title("逐步回归：价格影响因素")
+
+. graph export "images_zh/scenario0_eststo.png", width(1200) replace
+file images_zh/scenario0_eststo.png saved as PNG format
+
+. 
+. * English version
+. sysuse auto, clear
+(1978 automobile data)
+
+. eststo clear
+
+. eststo m1: regress price mpg
+
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(1, 72)        =     20.26
+       Model |   139449474         1   139449474   Prob > F        =    0.0000
+    Residual |   495615923        72  6883554.48   R-squared       =    0.2196
+-------------+----------------------------------   Adj R-squared   =    0.2087
+       Total |   635065396        73  8699525.97   Root MSE        =    2623.7
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -238.8943   53.07669    -4.50   0.000    -344.7008   -133.0879
+       _cons |   11253.06   1170.813     9.61   0.000     8919.088    13587.03
+------------------------------------------------------------------------------
+
+. eststo m2: regress price mpg trunk
+
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(2, 71)        =     10.14
+       Model |   141126459         2  70563229.4   Prob > F        =    0.0001
+    Residual |   493938937        71  6956886.44   R-squared       =    0.2222
+-------------+----------------------------------   Adj R-squared   =    0.2003
+       Total |   635065396        73  8699525.97   Root MSE        =    2637.6
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -220.1649   65.59262    -3.36   0.001    -350.9529    -89.3769
+       trunk |   43.55851   88.71884     0.49   0.625    -133.3418    220.4589
+       _cons |   10254.95   2349.084     4.37   0.000      5571.01    14938.89
+------------------------------------------------------------------------------
+
+. eststo m3: regress price mpg trunk length
+
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(3, 70)        =      6.93
+       Model |   145463928         3    48487976   Prob > F        =    0.0004
+    Residual |   489601468        70  6994306.69   R-squared       =    0.2291
+-------------+----------------------------------   Adj R-squared   =    0.1960
+       Total |   635065396        73  8699525.97   Root MSE        =    2644.7
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |   -173.708   88.35026    -1.97   0.053     -349.917    2.501039
+       trunk |  -.8546923   105.3287    -0.01   0.994    -210.9262    209.2168
+      length |   21.40414   27.18016     0.79   0.434    -32.80497    75.61325
+       _cons |   5853.993   6064.657     0.97   0.338    -6241.585    17949.57
+------------------------------------------------------------------------------
+
+. eststo m4: regress price mpg trunk length turn
+
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(4, 69)        =      5.79
+       Model |   159570047         4  39892511.8   Prob > F        =    0.0004
+    Residual |   475495349        69  6891236.94   R-squared       =    0.2513
+-------------+----------------------------------   Adj R-squared   =    0.2079
+       Total |   635065396        73  8699525.97   Root MSE        =    2625.1
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -186.8417   88.17601    -2.12   0.038     -362.748   -10.93533
+       trunk |  -12.72642   104.8785    -0.12   0.904    -221.9534    196.5005
+      length |   54.55294   35.56248     1.53   0.130    -16.39227    125.4981
+        turn |  -200.3248   140.0166    -1.43   0.157    -479.6502    79.00066
+       _cons |   8009.893   6205.538     1.29   0.201    -4369.817     20389.6
+------------------------------------------------------------------------------
+
+. 
+. coefplot m1 m2 m3 m4, vertical drop(_cons) yline(0) ///
+>     plotlabels("m1" "m2" "m3" "m4") legend(rows(1) position(6) colfirst) ///
+>     xtitle("Coefficient") title("Stepwise Regression: Price")
+
+. graph export "images_en/scenario0_eststo.png", width(1200) replace
+file images_en/scenario0_eststo.png saved as PNG format
+
+. 
+. * ============================================================
+. * 场景 1：单模型基础（竖排）
+. * ============================================================
+. sysuse auto, clear
+(1978 automobile data)
+
+. label variable mpg "每加仑英里数"
+
+. label variable trunk "行李箱容积"
+
+. label variable length "车长"
+
+. label variable turn "转弯半径"
+
+. label variable price "价格"
+
+. 
+. regress price mpg trunk length turn
+
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(4, 69)        =      5.79
+       Model |   159570047         4  39892511.8   Prob > F        =    0.0004
+    Residual |   475495349        69  6891236.94   R-squared       =    0.2513
+-------------+----------------------------------   Adj R-squared   =    0.2079
+       Total |   635065396        73  8699525.97   Root MSE        =    2625.1
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -186.8417   88.17601    -2.12   0.038     -362.748   -10.93533
+       trunk |  -12.72642   104.8785    -0.12   0.904    -221.9534    196.5005
+      length |   54.55294   35.56248     1.53   0.130    -16.39227    125.4981
+        turn |  -200.3248   140.0166    -1.43   0.157    -479.6502    79.00066
+       _cons |   8009.893   6205.538     1.29   0.201    -4369.817     20389.6
+------------------------------------------------------------------------------
+
+. 
+. * 水平布局
+. coefplot, drop(_cons) xline(0) xtitle("回归系数")
+
+. graph export "images_zh/scenario1_horizontal.png", width(1200) replace
+file images_zh/scenario1_horizontal.png saved as PNG format
+
+. 
+. * 竖直布局
+. coefplot, vertical drop(_cons) yline(0) ytitle("回归系数") title("价格影响因
+> 素回归系数")
+
+. graph export "images_zh/scenario1_vertical.png", width(800) replace
+file images_zh/scenario1_vertical.png saved as PNG format
+
+. 
+. * 筛选系数
+. coefplot, keep(mpg trunk) xline(0) xtitle("回归系数") title("筛选系数")
+
+. graph export "images_zh/scenario1_keep.png", width(1200) replace
+file images_zh/scenario1_keep.png saved as PNG format
+
+. 
+. * English
+. sysuse auto, clear
+(1978 automobile data)
+
+. regress price mpg trunk length turn
+
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(4, 69)        =      5.79
+       Model |   159570047         4  39892511.8   Prob > F        =    0.0004
+    Residual |   475495349        69  6891236.94   R-squared       =    0.2513
+-------------+----------------------------------   Adj R-squared   =    0.2079
+       Total |   635065396        73  8699525.97   Root MSE        =    2625.1
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -186.8417   88.17601    -2.12   0.038     -362.748   -10.93533
+       trunk |  -12.72642   104.8785    -0.12   0.904    -221.9534    196.5005
+      length |   54.55294   35.56248     1.53   0.130    -16.39227    125.4981
+        turn |  -200.3248   140.0166    -1.43   0.157    -479.6502    79.00066
+       _cons |   8009.893   6205.538     1.29   0.201    -4369.817     20389.6
+------------------------------------------------------------------------------
+
+. coefplot, vertical drop(_cons) yline(0) ytitle("Coefficient") title("Price Re
+> gression Coefficients")
+
+. graph export "images_en/scenario1_vertical.png", width(800) replace
+file images_en/scenario1_vertical.png saved as PNG format
+
+. 
+. coefplot, drop(_cons) xline(0) xtitle("Coefficient")
+
+. graph export "images_en/scenario1_horizontal.png", width(1200) replace
+file images_en/scenario1_horizontal.png saved as PNG format
+
+. 
+. coefplot, keep(mpg trunk) xline(0) xtitle("Coefficient") title("Select Coeffi
+> cients")
+
+. graph export "images_en/scenario1_keep.png", width(1200) replace
+file images_en/scenario1_keep.png saved as PNG format
+
+. 
+. * ============================================================
+. * 场景 2：多模型对比（竖排）
+. * ============================================================
+. sysuse auto, clear
+(1978 automobile data)
+
+. label variable mpg "每加仑英里数"
+
+. label variable trunk "行李箱容积"
+
+. label variable length "车长"
+
+. label variable turn "转弯半径"
+
+. label variable price "价格"
+
+. 
+. regress price mpg trunk length turn if foreign==0
+
+      Source |       SS           df       MS      Number of obs   =        52
+-------------+----------------------------------   F(4, 47)        =      4.46
+       Model |   134498637         4  33624659.2   Prob > F        =    0.0039
+    Residual |   354696164        47  7546726.89   R-squared       =    0.2749
+-------------+----------------------------------   Adj R-squared   =    0.2132
+       Total |   489194801        51  9592054.92   Root MSE        =    2747.1
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -186.1083    161.561    -1.15   0.255    -511.1271    138.9104
+       trunk |  -60.83919   153.2709    -0.40   0.693    -369.1805    247.5021
+      length |   52.68785   53.74091     0.98   0.332    -55.42491    160.8006
+        turn |  -15.89922   183.7335    -0.09   0.931    -385.5233    353.7249
+       _cons |   984.7459   10995.08     0.09   0.929     -21134.5    23103.99
+------------------------------------------------------------------------------
+
+. estimates store Domestic
+
+. regress price mpg trunk length turn if foreign==1
+
+      Source |       SS           df       MS      Number of obs   =        22
+-------------+----------------------------------   F(4, 17)        =     11.08
+       Model |   104341804         4    26085451   Prob > F        =    0.0001
+    Residual |  40021408.7        17  2354200.51   R-squared       =    0.7228
+-------------+----------------------------------   Adj R-squared   =    0.6575
+       Total |   144363213        21   6874438.7   Root MSE        =    1534.3
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -55.72135   70.93618    -0.79   0.443    -205.3836    93.94092
+       trunk |   160.2078   115.4879     1.39   0.183    -83.45041     403.866
+      length |   137.5743   35.85164     3.84   0.001     61.93393    213.2146
+        turn |   -54.3835   339.5595    -0.16   0.875    -770.7914    662.0244
+       _cons |  -15324.62   11573.58    -1.32   0.203    -39742.73    9093.486
+------------------------------------------------------------------------------
+
+. estimates store Foreign
+
+. 
+. coefplot Domestic Foreign, vertical drop(_cons) yline(0) ///
+>     plotlabels("国产" "进口") legend(rows(1) position(6)) ///
+>     ytitle("回归系数") title("国产 vs 进口：价格影响因素")
+
+. graph export "images_zh/scenario2_multimodel.png", width(800) replace
+file images_zh/scenario2_multimodel.png saved as PNG format
+
+. 
+. * English
+. sysuse auto, clear
+(1978 automobile data)
+
+. regress price mpg trunk length turn if foreign==0
+
+      Source |       SS           df       MS      Number of obs   =        52
+-------------+----------------------------------   F(4, 47)        =      4.46
+       Model |   134498637         4  33624659.2   Prob > F        =    0.0039
+    Residual |   354696164        47  7546726.89   R-squared       =    0.2749
+-------------+----------------------------------   Adj R-squared   =    0.2132
+       Total |   489194801        51  9592054.92   Root MSE        =    2747.1
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -186.1083    161.561    -1.15   0.255    -511.1271    138.9104
+       trunk |  -60.83919   153.2709    -0.40   0.693    -369.1805    247.5021
+      length |   52.68785   53.74091     0.98   0.332    -55.42491    160.8006
+        turn |  -15.89922   183.7335    -0.09   0.931    -385.5233    353.7249
+       _cons |   984.7459   10995.08     0.09   0.929     -21134.5    23103.99
+------------------------------------------------------------------------------
+
+. estimates store Domestic
+
+. regress price mpg trunk length turn if foreign==1
+
+      Source |       SS           df       MS      Number of obs   =        22
+-------------+----------------------------------   F(4, 17)        =     11.08
+       Model |   104341804         4    26085451   Prob > F        =    0.0001
+    Residual |  40021408.7        17  2354200.51   R-squared       =    0.7228
+-------------+----------------------------------   Adj R-squared   =    0.6575
+       Total |   144363213        21   6874438.7   Root MSE        =    1534.3
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -55.72135   70.93618    -0.79   0.443    -205.3836    93.94092
+       trunk |   160.2078   115.4879     1.39   0.183    -83.45041     403.866
+      length |   137.5743   35.85164     3.84   0.001     61.93393    213.2146
+        turn |   -54.3835   339.5595    -0.16   0.875    -770.7914    662.0244
+       _cons |  -15324.62   11573.58    -1.32   0.203    -39742.73    9093.486
+------------------------------------------------------------------------------
+
+. estimates store Foreign
+
+. coefplot Domestic Foreign, vertical drop(_cons) yline(0) ///
+>     plotlabels("Domestic" "Foreign") legend(rows(1) position(6)) ///
+>     ytitle("Coefficient") title("Domestic vs Foreign: Price")
+
+. graph export "images_en/scenario2_multimodel.png", width(800) replace
+file images_en/scenario2_multimodel.png saved as PNG format
+
+. 
+. * ============================================================
+. * 场景 3：子图（竖排 + 统一风格）
+. * ============================================================
+. sysuse auto, clear
+(1978 automobile data)
+
+. label variable mpg "每加仑英里数"
+
+. label variable trunk "行李箱容积"
+
+. label variable length "车长"
+
+. label variable turn "转弯半径"
+
+. label variable weight "车重"
+
+. label variable price "价格"
+
+. 
+. regress price  mpg trunk length turn if foreign==0
+
+      Source |       SS           df       MS      Number of obs   =        52
+-------------+----------------------------------   F(4, 47)        =      4.46
+       Model |   134498637         4  33624659.2   Prob > F        =    0.0039
+    Residual |   354696164        47  7546726.89   R-squared       =    0.2749
+-------------+----------------------------------   Adj R-squared   =    0.2132
+       Total |   489194801        51  9592054.92   Root MSE        =    2747.1
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -186.1083    161.561    -1.15   0.255    -511.1271    138.9104
+       trunk |  -60.83919   153.2709    -0.40   0.693    -369.1805    247.5021
+      length |   52.68785   53.74091     0.98   0.332    -55.42491    160.8006
+        turn |  -15.89922   183.7335    -0.09   0.931    -385.5233    353.7249
+       _cons |   984.7459   10995.08     0.09   0.929     -21134.5    23103.99
+------------------------------------------------------------------------------
+
+. estimates store D_price
+
+. regress price  mpg trunk length turn if foreign==1
+
+      Source |       SS           df       MS      Number of obs   =        22
+-------------+----------------------------------   F(4, 17)        =     11.08
+       Model |   104341804         4    26085451   Prob > F        =    0.0001
+    Residual |  40021408.7        17  2354200.51   R-squared       =    0.7228
+-------------+----------------------------------   Adj R-squared   =    0.6575
+       Total |   144363213        21   6874438.7   Root MSE        =    1534.3
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -55.72135   70.93618    -0.79   0.443    -205.3836    93.94092
+       trunk |   160.2078   115.4879     1.39   0.183    -83.45041     403.866
+      length |   137.5743   35.85164     3.84   0.001     61.93393    213.2146
+        turn |   -54.3835   339.5595    -0.16   0.875    -770.7914    662.0244
+       _cons |  -15324.62   11573.58    -1.32   0.203    -39742.73    9093.486
+------------------------------------------------------------------------------
+
+. estimates store F_price
+
+. regress weight mpg trunk length turn if foreign==0
+
+      Source |       SS           df       MS      Number of obs   =        52
+-------------+----------------------------------   F(4, 47)        =     87.75
+       Model |  21747902.2         4  5436975.55   Prob > F        =    0.0000
+    Residual |   2912165.1        47  61960.9596   R-squared       =    0.8819
+-------------+----------------------------------   Adj R-squared   =    0.8719
+       Total |  24660067.3        51  483530.732   Root MSE        =    248.92
+
+------------------------------------------------------------------------------
+      weight | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -47.25923   14.63916    -3.23   0.002    -76.70942   -17.80903
+       trunk |  -16.50892   13.88799    -1.19   0.241    -44.44796    11.43012
+      length |   24.83466   4.869504     5.10   0.000     15.03849    34.63084
+        turn |   2.253333   16.64823     0.14   0.893    -31.23859    35.74525
+       _cons |  -466.6936   996.2724    -0.47   0.642    -2470.935    1537.548
+------------------------------------------------------------------------------
+
+. estimates store D_weight
+
+. regress weight mpg trunk length turn if foreign==1
+
+      Source |       SS           df       MS      Number of obs   =        22
+-------------+----------------------------------   F(4, 17)        =     23.84
+       Model |  3341618.07         4  835404.518   Prob > F        =    0.0000
+    Residual |  595713.744        17   35041.985   R-squared       =    0.8487
+-------------+----------------------------------   Adj R-squared   =    0.8131
+       Total |  3937331.82        21  187491.991   Root MSE        =     187.2
+
+------------------------------------------------------------------------------
+      weight | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |    -9.3576   8.654469    -1.08   0.295    -27.61693    8.901735
+       trunk |   9.348989   14.08994     0.66   0.516    -20.37819    39.07617
+      length |   25.43503   4.374029     5.82   0.000     16.20663    34.66342
+        turn |   1.468401   41.42748     0.04   0.972    -85.93594    88.87274
+       _cons |  -1897.894   1412.018    -1.34   0.197    -4876.991    1081.203
+------------------------------------------------------------------------------
+
+. estimates store F_weight
+
+. 
+. coefplot (D_price, label(国产)) (F_price, label(进口)), bylabel(价格) ///
+>     || (D_weight) (F_weight), bylabel(重量) ///
+>     ||, vertical drop(_cons) yline(0) byopts(yrescale compact cols(1)) ///
+>     legend(rows(1) position(6))
+
+. graph export "images_zh/scenario3_subplot.png", width(800) replace
+file images_zh/scenario3_subplot.png saved as PNG format
+
+. 
+. * English
+. sysuse auto, clear
+(1978 automobile data)
+
+. regress price  mpg trunk length turn if foreign==0
+
+      Source |       SS           df       MS      Number of obs   =        52
+-------------+----------------------------------   F(4, 47)        =      4.46
+       Model |   134498637         4  33624659.2   Prob > F        =    0.0039
+    Residual |   354696164        47  7546726.89   R-squared       =    0.2749
+-------------+----------------------------------   Adj R-squared   =    0.2132
+       Total |   489194801        51  9592054.92   Root MSE        =    2747.1
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -186.1083    161.561    -1.15   0.255    -511.1271    138.9104
+       trunk |  -60.83919   153.2709    -0.40   0.693    -369.1805    247.5021
+      length |   52.68785   53.74091     0.98   0.332    -55.42491    160.8006
+        turn |  -15.89922   183.7335    -0.09   0.931    -385.5233    353.7249
+       _cons |   984.7459   10995.08     0.09   0.929     -21134.5    23103.99
+------------------------------------------------------------------------------
+
+. estimates store D_price
+
+. regress price  mpg trunk length turn if foreign==1
+
+      Source |       SS           df       MS      Number of obs   =        22
+-------------+----------------------------------   F(4, 17)        =     11.08
+       Model |   104341804         4    26085451   Prob > F        =    0.0001
+    Residual |  40021408.7        17  2354200.51   R-squared       =    0.7228
+-------------+----------------------------------   Adj R-squared   =    0.6575
+       Total |   144363213        21   6874438.7   Root MSE        =    1534.3
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -55.72135   70.93618    -0.79   0.443    -205.3836    93.94092
+       trunk |   160.2078   115.4879     1.39   0.183    -83.45041     403.866
+      length |   137.5743   35.85164     3.84   0.001     61.93393    213.2146
+        turn |   -54.3835   339.5595    -0.16   0.875    -770.7914    662.0244
+       _cons |  -15324.62   11573.58    -1.32   0.203    -39742.73    9093.486
+------------------------------------------------------------------------------
+
+. estimates store F_price
+
+. regress weight mpg trunk length turn if foreign==0
+
+      Source |       SS           df       MS      Number of obs   =        52
+-------------+----------------------------------   F(4, 47)        =     87.75
+       Model |  21747902.2         4  5436975.55   Prob > F        =    0.0000
+    Residual |   2912165.1        47  61960.9596   R-squared       =    0.8819
+-------------+----------------------------------   Adj R-squared   =    0.8719
+       Total |  24660067.3        51  483530.732   Root MSE        =    248.92
+
+------------------------------------------------------------------------------
+      weight | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -47.25923   14.63916    -3.23   0.002    -76.70942   -17.80903
+       trunk |  -16.50892   13.88799    -1.19   0.241    -44.44796    11.43012
+      length |   24.83466   4.869504     5.10   0.000     15.03849    34.63084
+        turn |   2.253333   16.64823     0.14   0.893    -31.23859    35.74525
+       _cons |  -466.6936   996.2724    -0.47   0.642    -2470.935    1537.548
+------------------------------------------------------------------------------
+
+. estimates store D_weight
+
+. regress weight mpg trunk length turn if foreign==1
+
+      Source |       SS           df       MS      Number of obs   =        22
+-------------+----------------------------------   F(4, 17)        =     23.84
+       Model |  3341618.07         4  835404.518   Prob > F        =    0.0000
+    Residual |  595713.744        17   35041.985   R-squared       =    0.8487
+-------------+----------------------------------   Adj R-squared   =    0.8131
+       Total |  3937331.82        21  187491.991   Root MSE        =     187.2
+
+------------------------------------------------------------------------------
+      weight | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |    -9.3576   8.654469    -1.08   0.295    -27.61693    8.901735
+       trunk |   9.348989   14.08994     0.66   0.516    -20.37819    39.07617
+      length |   25.43503   4.374029     5.82   0.000     16.20663    34.66342
+        turn |   1.468401   41.42748     0.04   0.972    -85.93594    88.87274
+       _cons |  -1897.894   1412.018    -1.34   0.197    -4876.991    1081.203
+------------------------------------------------------------------------------
+
+. estimates store F_weight
+
+. 
+. coefplot (D_price, label(Domestic)) (F_price, label(Foreign)), bylabel(Price)
+>  ///
+>     || (D_weight) (F_weight), bylabel(Weight) ///
+>     ||, vertical drop(_cons) yline(0) byopts(yrescale compact cols(1)) ///
+>     legend(rows(1) position(6))
+
+. graph export "images_en/scenario3_subplot.png", width(800) replace
+file images_en/scenario3_subplot.png saved as PNG format
+
+. 
+. * ============================================================
+. * 场景 4：bycoefs 面板（2x2 竖排）
+. * ============================================================
+. sysuse auto, clear
+(1978 automobile data)
+
+. label variable mpg "每加仑英里数"
+
+. label variable weight "车重"
+
+. label variable length "车长"
+
+. label variable turn "转弯半径"
+
+. label variable price "价格"
+
+. 
+. forvalues i = 3/5 {
+  2.     quietly regress price mpg weight length turn if rep78==`i'
+  3.     estimates store rep_`i'
+  4. }
+
+. 
+. coefplot rep_3 || rep_4 || rep_5, vertical drop(_cons) yline(0) ///
+>     bycoefs byopts(yrescale compact cols(2))
+
+. graph export "images_zh/scenario4_bycoefs.png", width(1200) replace
+file images_zh/scenario4_bycoefs.png saved as PNG format
+
+. 
+. * English
+. sysuse auto, clear
+(1978 automobile data)
+
+. forvalues i = 3/5 {
+  2.     quietly regress price mpg weight length turn if rep78==`i'
+  3.     estimates store rep_`i'
+  4. }
+
+. coefplot rep_3 || rep_4 || rep_5, vertical drop(_cons) yline(0) ///
+>     bycoefs byopts(yrescale compact cols(2))
+
+. graph export "images_en/scenario4_bycoefs.png", width(1200) replace
+file images_en/scenario4_bycoefs.png saved as PNG format
+
+. 
+. * ============================================================
+. * 场景 5：Odds Ratio（横排，因变量少）
+. * ============================================================
+. sysuse auto, clear
+(1978 automobile data)
+
+. label variable mpg "每加仑英里数"
+
+. label variable trunk "行李箱容积"
+
+. label variable length "车长"
+
+. label variable turn "转弯半径"
+
+. 
+. logit foreign mpg trunk length turn
+
+Iteration 0:  Log likelihood =  -45.03321  
+Iteration 1:  Log likelihood = -27.669278  
+Iteration 2:  Log likelihood = -25.257138  
+Iteration 3:  Log likelihood = -25.074055  
+Iteration 4:  Log likelihood = -25.073487  
+Iteration 5:  Log likelihood = -25.073487  
+
+Logistic regression                                     Number of obs =     74
+                                                        LR chi2(4)    =  39.92
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -25.073487                             Pseudo R2     = 0.4432
+
+------------------------------------------------------------------------------
+     foreign | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -.1229744   .0824787    -1.49   0.136    -.2846296    .0386808
+       trunk |  -.0029202   .1167932    -0.03   0.980    -.2318307    .2259904
+      length |  -.0438113   .0396085    -1.11   0.269    -.1214426      .03382
+        turn |  -.4878082   .1809598    -2.70   0.007    -.8424828   -.1331335
+       _cons |   28.35416   7.987812     3.55   0.000     12.69833    44.00998
+------------------------------------------------------------------------------
+
+. coefplot, drop(_cons) xline(1) eform xtitle("Odds Ratio (比值比)") ///
+>     title("Logit 模型：进口车影响因素")
+
+. graph export "images_zh/scenario5_oddsratio.png", width(1200) replace
+file images_zh/scenario5_oddsratio.png saved as PNG format
+
+. 
+. * English
+. sysuse auto, clear
+(1978 automobile data)
+
+. logit foreign mpg trunk length turn
+
+Iteration 0:  Log likelihood =  -45.03321  
+Iteration 1:  Log likelihood = -27.669278  
+Iteration 2:  Log likelihood = -25.257138  
+Iteration 3:  Log likelihood = -25.074055  
+Iteration 4:  Log likelihood = -25.073487  
+Iteration 5:  Log likelihood = -25.073487  
+
+Logistic regression                                     Number of obs =     74
+                                                        LR chi2(4)    =  39.92
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -25.073487                             Pseudo R2     = 0.4432
+
+------------------------------------------------------------------------------
+     foreign | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -.1229744   .0824787    -1.49   0.136    -.2846296    .0386808
+       trunk |  -.0029202   .1167932    -0.03   0.980    -.2318307    .2259904
+      length |  -.0438113   .0396085    -1.11   0.269    -.1214426      .03382
+        turn |  -.4878082   .1809598    -2.70   0.007    -.8424828   -.1331335
+       _cons |   28.35416   7.987812     3.55   0.000     12.69833    44.00998
+------------------------------------------------------------------------------
+
+. coefplot, drop(_cons) xline(1) eform xtitle("Odds Ratio") title("Logit: Forei
+> gn Car")
+
+. graph export "images_en/scenario5_oddsratio.png", width(1200) replace
+file images_en/scenario5_oddsratio.png saved as PNG format
+
+. 
+. * ============================================================
+. * 场景 6：多层级 CI（竖排）
+. * ============================================================
+. sysuse auto, clear
+(1978 automobile data)
+
+. label variable mpg "每加仑英里数"
+
+. label variable trunk "行李箱容积"
+
+. label variable length "车长"
+
+. label variable turn "转弯半径"
+
+. label variable price "价格"
+
+. 
+. regress price mpg trunk length turn
+
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(4, 69)        =      5.79
+       Model |   159570047         4  39892511.8   Prob > F        =    0.0004
+    Residual |   475495349        69  6891236.94   R-squared       =    0.2513
+-------------+----------------------------------   Adj R-squared   =    0.2079
+       Total |   635065396        73  8699525.97   Root MSE        =    2625.1
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -186.8417   88.17601    -2.12   0.038     -362.748   -10.93533
+       trunk |  -12.72642   104.8785    -0.12   0.904    -221.9534    196.5005
+      length |   54.55294   35.56248     1.53   0.130    -16.39227    125.4981
+        turn |  -200.3248   140.0166    -1.43   0.157    -479.6502    79.00066
+       _cons |   8009.893   6205.538     1.29   0.201    -4369.817     20389.6
+------------------------------------------------------------------------------
+
+. 
+. coefplot, vertical drop(_cons) yline(0) msymbol(S) mfcolor(white) ///
+>     levels(99 95 90) legend(order(1 "99%" 2 "95%" 3 "90%") rows(1) position(6
+> )) ///
+>     ytitle("回归系数") title("多层级置信区间")
+
+. graph export "images_zh/scenario6_multici.png", width(800) replace
+file images_zh/scenario6_multici.png saved as PNG format
+
+. 
+. * English
+. sysuse auto, clear
+(1978 automobile data)
+
+. regress price mpg trunk length turn
+
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(4, 69)        =      5.79
+       Model |   159570047         4  39892511.8   Prob > F        =    0.0004
+    Residual |   475495349        69  6891236.94   R-squared       =    0.2513
+-------------+----------------------------------   Adj R-squared   =    0.2079
+       Total |   635065396        73  8699525.97   Root MSE        =    2625.1
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -186.8417   88.17601    -2.12   0.038     -362.748   -10.93533
+       trunk |  -12.72642   104.8785    -0.12   0.904    -221.9534    196.5005
+      length |   54.55294   35.56248     1.53   0.130    -16.39227    125.4981
+        turn |  -200.3248   140.0166    -1.43   0.157    -479.6502    79.00066
+       _cons |   8009.893   6205.538     1.29   0.201    -4369.817     20389.6
+------------------------------------------------------------------------------
+
+. coefplot, vertical drop(_cons) yline(0) msymbol(S) mfcolor(white) ///
+>     levels(99 95 90) legend(order(1 "99%" 2 "95%" 3 "90%") rows(1) position(6
+> )) ///
+>     ytitle("Coefficient") title("Multi-level Confidence Intervals")
+
+. graph export "images_en/scenario6_multici.png", width(800) replace
+file images_en/scenario6_multici.png saved as PNG format
+
+. 
+. * ============================================================
+. * 场景 7：条形图（竖排）
+. * ============================================================
+. sysuse auto, clear
+(1978 automobile data)
+
+. label variable mpg "每加仑英里数"
+
+. label variable trunk "行李箱容积"
+
+. label variable length "车长"
+
+. label variable turn "转弯半径"
+
+. label variable price "价格"
+
+. 
+. regress price mpg trunk length turn if foreign==0
+
+      Source |       SS           df       MS      Number of obs   =        52
+-------------+----------------------------------   F(4, 47)        =      4.46
+       Model |   134498637         4  33624659.2   Prob > F        =    0.0039
+    Residual |   354696164        47  7546726.89   R-squared       =    0.2749
+-------------+----------------------------------   Adj R-squared   =    0.2132
+       Total |   489194801        51  9592054.92   Root MSE        =    2747.1
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -186.1083    161.561    -1.15   0.255    -511.1271    138.9104
+       trunk |  -60.83919   153.2709    -0.40   0.693    -369.1805    247.5021
+      length |   52.68785   53.74091     0.98   0.332    -55.42491    160.8006
+        turn |  -15.89922   183.7335    -0.09   0.931    -385.5233    353.7249
+       _cons |   984.7459   10995.08     0.09   0.929     -21134.5    23103.99
+------------------------------------------------------------------------------
+
+. estimates store D
+
+. regress price mpg trunk length turn if foreign==1
+
+      Source |       SS           df       MS      Number of obs   =        22
+-------------+----------------------------------   F(4, 17)        =     11.08
+       Model |   104341804         4    26085451   Prob > F        =    0.0001
+    Residual |  40021408.7        17  2354200.51   R-squared       =    0.7228
+-------------+----------------------------------   Adj R-squared   =    0.6575
+       Total |   144363213        21   6874438.7   Root MSE        =    1534.3
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -55.72135   70.93618    -0.79   0.443    -205.3836    93.94092
+       trunk |   160.2078   115.4879     1.39   0.183    -83.45041     403.866
+      length |   137.5743   35.85164     3.84   0.001     61.93393    213.2146
+        turn |   -54.3835   339.5595    -0.16   0.875    -770.7914    662.0244
+       _cons |  -15324.62   11573.58    -1.32   0.203    -39742.73    9093.486
+------------------------------------------------------------------------------
+
+. estimates store F
+
+. 
+. coefplot (D, label(国产)) (F, label(进口)), vertical drop(_cons) yline(0) ///
+>     recast(bar) ciopts(recast(rcap)) citop barwidth(0.3) ///
+>     legend(rows(1) position(6)) ytitle("回归系数")
+
+. graph export "images_zh/scenario7_bar.png", width(800) replace
+file images_zh/scenario7_bar.png saved as PNG format
+
+. 
+. * English
+. sysuse auto, clear
+(1978 automobile data)
+
+. regress price mpg trunk length turn if foreign==0
+
+      Source |       SS           df       MS      Number of obs   =        52
+-------------+----------------------------------   F(4, 47)        =      4.46
+       Model |   134498637         4  33624659.2   Prob > F        =    0.0039
+    Residual |   354696164        47  7546726.89   R-squared       =    0.2749
+-------------+----------------------------------   Adj R-squared   =    0.2132
+       Total |   489194801        51  9592054.92   Root MSE        =    2747.1
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -186.1083    161.561    -1.15   0.255    -511.1271    138.9104
+       trunk |  -60.83919   153.2709    -0.40   0.693    -369.1805    247.5021
+      length |   52.68785   53.74091     0.98   0.332    -55.42491    160.8006
+        turn |  -15.89922   183.7335    -0.09   0.931    -385.5233    353.7249
+       _cons |   984.7459   10995.08     0.09   0.929     -21134.5    23103.99
+------------------------------------------------------------------------------
+
+. estimates store D
+
+. regress price mpg trunk length turn if foreign==1
+
+      Source |       SS           df       MS      Number of obs   =        22
+-------------+----------------------------------   F(4, 17)        =     11.08
+       Model |   104341804         4    26085451   Prob > F        =    0.0001
+    Residual |  40021408.7        17  2354200.51   R-squared       =    0.7228
+-------------+----------------------------------   Adj R-squared   =    0.6575
+       Total |   144363213        21   6874438.7   Root MSE        =    1534.3
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -55.72135   70.93618    -0.79   0.443    -205.3836    93.94092
+       trunk |   160.2078   115.4879     1.39   0.183    -83.45041     403.866
+      length |   137.5743   35.85164     3.84   0.001     61.93393    213.2146
+        turn |   -54.3835   339.5595    -0.16   0.875    -770.7914    662.0244
+       _cons |  -15324.62   11573.58    -1.32   0.203    -39742.73    9093.486
+------------------------------------------------------------------------------
+
+. estimates store F
+
+. coefplot (D, label(Domestic)) (F, label(Foreign)), vertical drop(_cons) yline
+> (0) ///
+>     recast(bar) ciopts(recast(rcap)) citop barwidth(0.3) ///
+>     legend(rows(1) position(6)) ytitle("Coefficient")
+
+. graph export "images_en/scenario7_bar.png", width(800) replace
+file images_en/scenario7_bar.png saved as PNG format
+
+. 
+. * ============================================================
+. * 场景 8：显著性星号（竖排）
+. * ============================================================
+. sysuse auto, clear
+(1978 automobile data)
+
+. label variable mpg "每加仑英里数"
+
+. label variable trunk "行李箱容积"
+
+. label variable length "车长"
+
+. label variable turn "转弯半径"
+
+. label variable price "价格"
+
+. 
+. regress price mpg trunk length turn
+
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(4, 69)        =      5.79
+       Model |   159570047         4  39892511.8   Prob > F        =    0.0004
+    Residual |   475495349        69  6891236.94   R-squared       =    0.2513
+-------------+----------------------------------   Adj R-squared   =    0.2079
+       Total |   635065396        73  8699525.97   Root MSE        =    2625.1
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -186.8417   88.17601    -2.12   0.038     -362.748   -10.93533
+       trunk |  -12.72642   104.8785    -0.12   0.904    -221.9534    196.5005
+      length |   54.55294   35.56248     1.53   0.130    -16.39227    125.4981
+        turn |  -200.3248   140.0166    -1.43   0.157    -479.6502    79.00066
+       _cons |   8009.893   6205.538     1.29   0.201    -4369.817     20389.6
+------------------------------------------------------------------------------
+
+. 
+. coefplot, vertical drop(_cons) yline(0) mlabposition(1) ///
+>     mlabel(cond(@pval<.001, "***", cond(@pval<.01, "**", ///
+>            cond(@pval<.05, "*", cond(@pval<.1, "+", ""))))) ///
+>     note("+ p<0.1, * p<0.05, ** p<0.01, *** p<0.001") ///
+>     ytitle("回归系数") title("显著性星号标注")
+
+. graph export "images_zh/scenario8_significance.png", width(800) replace
+file images_zh/scenario8_significance.png saved as PNG format
+
+. 
+. * English
+. sysuse auto, clear
+(1978 automobile data)
+
+. regress price mpg trunk length turn
+
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(4, 69)        =      5.79
+       Model |   159570047         4  39892511.8   Prob > F        =    0.0004
+    Residual |   475495349        69  6891236.94   R-squared       =    0.2513
+-------------+----------------------------------   Adj R-squared   =    0.2079
+       Total |   635065396        73  8699525.97   Root MSE        =    2625.1
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -186.8417   88.17601    -2.12   0.038     -362.748   -10.93533
+       trunk |  -12.72642   104.8785    -0.12   0.904    -221.9534    196.5005
+      length |   54.55294   35.56248     1.53   0.130    -16.39227    125.4981
+        turn |  -200.3248   140.0166    -1.43   0.157    -479.6502    79.00066
+       _cons |   8009.893   6205.538     1.29   0.201    -4369.817     20389.6
+------------------------------------------------------------------------------
+
+. coefplot, vertical drop(_cons) yline(0) mlabposition(1) ///
+>     mlabel(cond(@pval<.001, "***", cond(@pval<.01, "**", ///
+>            cond(@pval<.05, "*", cond(@pval<.1, "+", ""))))) ///
+>     note("+ p<0.1, * p<0.05, ** p<0.01, *** p<0.001") ///
+>     ytitle("Coefficient") title("Significance Stars")
+
+. graph export "images_en/scenario8_significance.png", width(800) replace
+file images_en/scenario8_significance.png saved as PNG format
+
+. 
+. * ============================================================
+. * 场景 9a：降序森林图（竖排）
+. * ============================================================
+. sysuse auto, clear
+(1978 automobile data)
+
+. label variable mpg "每加仑英里数"
+
+. label variable trunk "行李箱容积"
+
+. label variable length "车长"
+
+. label variable turn "转弯半径"
+
+. label variable price "价格"
+
+. 
+. regress price mpg trunk length turn
+
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(4, 69)        =      5.79
+       Model |   159570047         4  39892511.8   Prob > F        =    0.0004
+    Residual |   475495349        69  6891236.94   R-squared       =    0.2513
+-------------+----------------------------------   Adj R-squared   =    0.2079
+       Total |   635065396        73  8699525.97   Root MSE        =    2625.1
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -186.8417   88.17601    -2.12   0.038     -362.748   -10.93533
+       trunk |  -12.72642   104.8785    -0.12   0.904    -221.9534    196.5005
+      length |   54.55294   35.56248     1.53   0.130    -16.39227    125.4981
+        turn |  -200.3248   140.0166    -1.43   0.157    -479.6502    79.00066
+       _cons |   8009.893   6205.538     1.29   0.201    -4369.817     20389.6
+------------------------------------------------------------------------------
+
+. 
+. coefplot, vertical drop(_cons) sort(, descending) yline(0) ///
+>     ytitle("回归系数") title("按效应大小降序排列（森林图）")
+
+. graph export "images_zh/scenario9_sort.png", width(800) replace
+file images_zh/scenario9_sort.png saved as PNG format
+
+. 
+. * English
+. sysuse auto, clear
+(1978 automobile data)
+
+. regress price mpg trunk length turn
+
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(4, 69)        =      5.79
+       Model |   159570047         4  39892511.8   Prob > F        =    0.0004
+    Residual |   475495349        69  6891236.94   R-squared       =    0.2513
+-------------+----------------------------------   Adj R-squared   =    0.2079
+       Total |   635065396        73  8699525.97   Root MSE        =    2625.1
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -186.8417   88.17601    -2.12   0.038     -362.748   -10.93533
+       trunk |  -12.72642   104.8785    -0.12   0.904    -221.9534    196.5005
+      length |   54.55294   35.56248     1.53   0.130    -16.39227    125.4981
+        turn |  -200.3248   140.0166    -1.43   0.157    -479.6502    79.00066
+       _cons |   8009.893   6205.538     1.29   0.201    -4369.817     20389.6
+------------------------------------------------------------------------------
+
+. coefplot, vertical drop(_cons) sort(, descending) yline(0) ///
+>     ytitle("Coefficient") title("Sorted by Effect Size (Forest Plot)")
+
+. graph export "images_en/scenario9_sort.png", width(800) replace
+file images_en/scenario9_sort.png saved as PNG format
+
+. 
+. * ============================================================
+. * 场景 9b：双变量 vs 多变量（竖排）
+. * ============================================================
+. sysuse auto, clear
+(1978 automobile data)
+
+. label variable mpg "每加仑英里数"
+
+. label variable trunk "行李箱容积"
+
+. label variable length "车长"
+
+. label variable turn "转弯半径"
+
+. label variable price "价格"
+
+. 
+. foreach var in mpg trunk length turn {
+  2.     quietly regress price `var'
+  3.     estimates store b_`var'
+  4. }
+
+. regress price mpg trunk length turn
+
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(4, 69)        =      5.79
+       Model |   159570047         4  39892511.8   Prob > F        =    0.0004
+    Residual |   475495349        69  6891236.94   R-squared       =    0.2513
+-------------+----------------------------------   Adj R-squared   =    0.2079
+       Total |   635065396        73  8699525.97   Root MSE        =    2625.1
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -186.8417   88.17601    -2.12   0.038     -362.748   -10.93533
+       trunk |  -12.72642   104.8785    -0.12   0.904    -221.9534    196.5005
+      length |   54.55294   35.56248     1.53   0.130    -16.39227    125.4981
+        turn |  -200.3248   140.0166    -1.43   0.157    -479.6502    79.00066
+       _cons |   8009.893   6205.538     1.29   0.201    -4369.817     20389.6
+------------------------------------------------------------------------------
+
+. estimates store multi
+
+. 
+. coefplot (b_mpg b_trunk b_length b_turn, label(双变量)) ///
+>          (multi, label(多变量)), vertical drop(_cons) yline(0) ///
+>     legend(rows(1) position(6)) ytitle("回归系数") title("双变量 vs 多变量")
+
+. graph export "images_zh/scenario9_bivariate.png", width(800) replace
+file images_zh/scenario9_bivariate.png saved as PNG format
+
+. 
+. * English
+. sysuse auto, clear
+(1978 automobile data)
+
+. foreach var in mpg trunk length turn {
+  2.     quietly regress price `var'
+  3.     estimates store b_`var'
+  4. }
+
+. regress price mpg trunk length turn
+
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(4, 69)        =      5.79
+       Model |   159570047         4  39892511.8   Prob > F        =    0.0004
+    Residual |   475495349        69  6891236.94   R-squared       =    0.2513
+-------------+----------------------------------   Adj R-squared   =    0.2079
+       Total |   635065396        73  8699525.97   Root MSE        =    2625.1
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -186.8417   88.17601    -2.12   0.038     -362.748   -10.93533
+       trunk |  -12.72642   104.8785    -0.12   0.904    -221.9534    196.5005
+      length |   54.55294   35.56248     1.53   0.130    -16.39227    125.4981
+        turn |  -200.3248   140.0166    -1.43   0.157    -479.6502    79.00066
+       _cons |   8009.893   6205.538     1.29   0.201    -4369.817     20389.6
+------------------------------------------------------------------------------
+
+. estimates store multi
+
+. coefplot (b_mpg b_trunk b_length b_turn, label(Bivariate)) ///
+>          (multi, label(Multivariate)), vertical drop(_cons) yline(0) ///
+>     legend(rows(1) position(6)) ytitle("Coefficient") title("Bivariate vs Mul
+> tivariate")
+
+. graph export "images_en/scenario9_bivariate.png", width(800) replace
+file images_en/scenario9_bivariate.png saved as PNG format
+
+. 
+. * ============================================================
+. * 场景 10：边际效应折线图（横排更合适）
+. * ============================================================
+. sysuse auto, clear
+(1978 automobile data)
+
+. label variable mpg "每加仑英里数"
+
+. 
+. logit foreign mpg
+
+Iteration 0:  Log likelihood =  -45.03321  
+Iteration 1:  Log likelihood = -39.380959  
+Iteration 2:  Log likelihood = -39.288802  
+Iteration 3:  Log likelihood =  -39.28864  
+Iteration 4:  Log likelihood =  -39.28864  
+
+Logistic regression                                     Number of obs =     74
+                                                        LR chi2(1)    =  11.49
+                                                        Prob > chi2   = 0.0007
+Log likelihood = -39.28864                              Pseudo R2     = 0.1276
+
+------------------------------------------------------------------------------
+     foreign | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |   .1597621   .0525876     3.04   0.002     .0566922     .262832
+       _cons |  -4.378866   1.211295    -3.62   0.000    -6.752961   -2.004771
+------------------------------------------------------------------------------
+
+. margins, at(mpg=(10(2)40)) post
+
+Adjusted predictions                                        Number of obs = 74
+Model VCE: OIM
+
+Expression: Pr(foreign), predict()
+1._at:  mpg = 10
+2._at:  mpg = 12
+3._at:  mpg = 14
+4._at:  mpg = 16
+5._at:  mpg = 18
+6._at:  mpg = 20
+7._at:  mpg = 22
+8._at:  mpg = 24
+9._at:  mpg = 26
+10._at: mpg = 28
+11._at: mpg = 30
+12._at: mpg = 32
+13._at: mpg = 34
+14._at: mpg = 36
+15._at: mpg = 38
+16._at: mpg = 40
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |     Margin   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         _at |
+          1  |   .0583461   .0389888     1.50   0.135    -.0180704    .1347627
+          2  |   .0785857   .0444732     1.77   0.077    -.0085802    .1657516
+          3  |   .1050627   .0491263     2.14   0.032     .0087769    .2013485
+          4  |   .1391136    .052323     2.66   0.008     .0365624    .2416648
+          5  |   .1819565   .0538513     3.38   0.001       .07641    .2875031
+          6  |   .2344013   .0547344     4.28   0.000      .127124    .3416787
+          7  |   .2964837   .0579854     5.11   0.000     .1828343     .410133
+          8  |    .367124   .0672058     5.46   0.000      .235403    .4988451
+          9  |   .4439736   .0826793     5.37   0.000     .2819253     .606022
+         10  |   .5236009   .1006474     5.20   0.000     .3263356    .7208662
+         11  |   .6020462   .1162814     5.18   0.000     .3741387    .8299536
+         12  |   .6755777   .1259878     5.36   0.000     .4286461    .9225094
+         13  |   .7413595   .1282598     5.78   0.000     .4899749    .9927441
+         14  |   .7977952    .123549     6.46   0.000     .5556436    1.039947
+         15  |   .8444995   .1135603     7.44   0.000     .6219254    1.067074
+         16  |   .8820117   .1004224     8.78   0.000     .6851874    1.078836
+------------------------------------------------------------------------------
+
+. estimates store bi
+
+. 
+. logit foreign mpg turn price
+
+Iteration 0:  Log likelihood =  -45.03321  
+Iteration 1:  Log likelihood = -25.518236  
+Iteration 2:  Log likelihood = -22.064705  
+Iteration 3:  Log likelihood = -21.628424  
+Iteration 4:  Log likelihood = -21.619852  
+Iteration 5:  Log likelihood = -21.619829  
+Iteration 6:  Log likelihood = -21.619829  
+
+Logistic regression                                     Number of obs =     74
+                                                        LR chi2(3)    =  46.83
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -21.619829                             Pseudo R2     = 0.5199
+
+------------------------------------------------------------------------------
+     foreign | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |   .0336536   .0829686     0.41   0.685    -.1289618     .196269
+        turn |  -.7569358   .2122381    -3.57   0.000    -1.172915   -.3409567
+       price |   .0005015   .0002034     2.47   0.014     .0001028    .0009003
+       _cons |   23.74962   7.707673     3.08   0.002     8.642855    38.85638
+------------------------------------------------------------------------------
+
+. margins, at(mpg=(10(2)40)) post
+
+Predictive margins                                          Number of obs = 74
+Model VCE: OIM
+
+Expression: Pr(foreign), predict()
+1._at:  mpg = 10
+2._at:  mpg = 12
+3._at:  mpg = 14
+4._at:  mpg = 16
+5._at:  mpg = 18
+6._at:  mpg = 20
+7._at:  mpg = 22
+8._at:  mpg = 24
+9._at:  mpg = 26
+10._at: mpg = 28
+11._at: mpg = 30
+12._at: mpg = 32
+13._at: mpg = 34
+14._at: mpg = 36
+15._at: mpg = 38
+16._at: mpg = 40
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |     Margin   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         _at |
+          1  |   .2509614   .1203841     2.08   0.037     .0150128    .4869099
+          2  |   .2574498   .1054385     2.44   0.015     .0507941    .4641055
+          3  |   .2639554   .0906012     2.91   0.004     .0863803    .4415305
+          4  |   .2704719    .076101     3.55   0.000     .1213166    .4196272
+          5  |   .2769931    .062328     4.44   0.000     .1548324    .3991538
+          6  |    .283513   .0500184     5.67   0.000     .1854787    .3815473
+          7  |   .2900257   .0406139     7.14   0.000      .210424    .3696275
+          8  |   .2965257   .0364529     8.13   0.000     .2250793     .367972
+          9  |   .3030074   .0391835     7.73   0.000      .226209    .3798057
+         10  |   .3094658   .0475346     6.51   0.000     .2162998    .4026318
+         11  |    .315896   .0590528     5.35   0.000     .2001546    .4316374
+         12  |   .3222937   .0721138     4.47   0.000     .1809533    .4636342
+         13  |   .3286547   .0858939     3.83   0.000     .1603059    .4970036
+         14  |   .3349754   .0999778     3.35   0.001     .1390225    .5309282
+         15  |   .3412523   .1141419     2.99   0.003     .1175384    .5649662
+         16  |   .3474827    .128257     2.71   0.007     .0961037    .5988618
+------------------------------------------------------------------------------
+
+. estimates store multi
+
+. 
+. coefplot bi multi, ytitle(Pr(foreign=1)) xtitle("每加仑英里数") ///
+>     at recast(line) lwidth(*2) ciopts(recast(rline) lpattern(dash)) ///
+>     title("预测边际效应") legend(position(6))
+
+. graph export "images_zh/scenario10_margins.png", width(1200) replace
+file images_zh/scenario10_margins.png saved as PNG format
+
+. 
+. * English
+. sysuse auto, clear
+(1978 automobile data)
+
+. logit foreign mpg
+
+Iteration 0:  Log likelihood =  -45.03321  
+Iteration 1:  Log likelihood = -39.380959  
+Iteration 2:  Log likelihood = -39.288802  
+Iteration 3:  Log likelihood =  -39.28864  
+Iteration 4:  Log likelihood =  -39.28864  
+
+Logistic regression                                     Number of obs =     74
+                                                        LR chi2(1)    =  11.49
+                                                        Prob > chi2   = 0.0007
+Log likelihood = -39.28864                              Pseudo R2     = 0.1276
+
+------------------------------------------------------------------------------
+     foreign | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |   .1597621   .0525876     3.04   0.002     .0566922     .262832
+       _cons |  -4.378866   1.211295    -3.62   0.000    -6.752961   -2.004771
+------------------------------------------------------------------------------
+
+. margins, at(mpg=(10(2)40)) post
+
+Adjusted predictions                                        Number of obs = 74
+Model VCE: OIM
+
+Expression: Pr(foreign), predict()
+1._at:  mpg = 10
+2._at:  mpg = 12
+3._at:  mpg = 14
+4._at:  mpg = 16
+5._at:  mpg = 18
+6._at:  mpg = 20
+7._at:  mpg = 22
+8._at:  mpg = 24
+9._at:  mpg = 26
+10._at: mpg = 28
+11._at: mpg = 30
+12._at: mpg = 32
+13._at: mpg = 34
+14._at: mpg = 36
+15._at: mpg = 38
+16._at: mpg = 40
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |     Margin   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         _at |
+          1  |   .0583461   .0389888     1.50   0.135    -.0180704    .1347627
+          2  |   .0785857   .0444732     1.77   0.077    -.0085802    .1657516
+          3  |   .1050627   .0491263     2.14   0.032     .0087769    .2013485
+          4  |   .1391136    .052323     2.66   0.008     .0365624    .2416648
+          5  |   .1819565   .0538513     3.38   0.001       .07641    .2875031
+          6  |   .2344013   .0547344     4.28   0.000      .127124    .3416787
+          7  |   .2964837   .0579854     5.11   0.000     .1828343     .410133
+          8  |    .367124   .0672058     5.46   0.000      .235403    .4988451
+          9  |   .4439736   .0826793     5.37   0.000     .2819253     .606022
+         10  |   .5236009   .1006474     5.20   0.000     .3263356    .7208662
+         11  |   .6020462   .1162814     5.18   0.000     .3741387    .8299536
+         12  |   .6755777   .1259878     5.36   0.000     .4286461    .9225094
+         13  |   .7413595   .1282598     5.78   0.000     .4899749    .9927441
+         14  |   .7977952    .123549     6.46   0.000     .5556436    1.039947
+         15  |   .8444995   .1135603     7.44   0.000     .6219254    1.067074
+         16  |   .8820117   .1004224     8.78   0.000     .6851874    1.078836
+------------------------------------------------------------------------------
+
+. estimates store bi
+
+. logit foreign mpg turn price
+
+Iteration 0:  Log likelihood =  -45.03321  
+Iteration 1:  Log likelihood = -25.518236  
+Iteration 2:  Log likelihood = -22.064705  
+Iteration 3:  Log likelihood = -21.628424  
+Iteration 4:  Log likelihood = -21.619852  
+Iteration 5:  Log likelihood = -21.619829  
+Iteration 6:  Log likelihood = -21.619829  
+
+Logistic regression                                     Number of obs =     74
+                                                        LR chi2(3)    =  46.83
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -21.619829                             Pseudo R2     = 0.5199
+
+------------------------------------------------------------------------------
+     foreign | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |   .0336536   .0829686     0.41   0.685    -.1289618     .196269
+        turn |  -.7569358   .2122381    -3.57   0.000    -1.172915   -.3409567
+       price |   .0005015   .0002034     2.47   0.014     .0001028    .0009003
+       _cons |   23.74962   7.707673     3.08   0.002     8.642855    38.85638
+------------------------------------------------------------------------------
+
+. margins, at(mpg=(10(2)40)) post
+
+Predictive margins                                          Number of obs = 74
+Model VCE: OIM
+
+Expression: Pr(foreign), predict()
+1._at:  mpg = 10
+2._at:  mpg = 12
+3._at:  mpg = 14
+4._at:  mpg = 16
+5._at:  mpg = 18
+6._at:  mpg = 20
+7._at:  mpg = 22
+8._at:  mpg = 24
+9._at:  mpg = 26
+10._at: mpg = 28
+11._at: mpg = 30
+12._at: mpg = 32
+13._at: mpg = 34
+14._at: mpg = 36
+15._at: mpg = 38
+16._at: mpg = 40
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |     Margin   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         _at |
+          1  |   .2509614   .1203841     2.08   0.037     .0150128    .4869099
+          2  |   .2574498   .1054385     2.44   0.015     .0507941    .4641055
+          3  |   .2639554   .0906012     2.91   0.004     .0863803    .4415305
+          4  |   .2704719    .076101     3.55   0.000     .1213166    .4196272
+          5  |   .2769931    .062328     4.44   0.000     .1548324    .3991538
+          6  |    .283513   .0500184     5.67   0.000     .1854787    .3815473
+          7  |   .2900257   .0406139     7.14   0.000      .210424    .3696275
+          8  |   .2965257   .0364529     8.13   0.000     .2250793     .367972
+          9  |   .3030074   .0391835     7.73   0.000      .226209    .3798057
+         10  |   .3094658   .0475346     6.51   0.000     .2162998    .4026318
+         11  |    .315896   .0590528     5.35   0.000     .2001546    .4316374
+         12  |   .3222937   .0721138     4.47   0.000     .1809533    .4636342
+         13  |   .3286547   .0858939     3.83   0.000     .1603059    .4970036
+         14  |   .3349754   .0999778     3.35   0.001     .1390225    .5309282
+         15  |   .3412523   .1141419     2.99   0.003     .1175384    .5649662
+         16  |   .3474827    .128257     2.71   0.007     .0961037    .5988618
+------------------------------------------------------------------------------
+
+. estimates store multi
+
+. coefplot bi multi, ytitle(Pr(foreign=1)) xtitle("Miles per Gallon") ///
+>     at recast(line) lwidth(*2) ciopts(recast(rline) lpattern(dash)) ///
+>     title("Predicted Marginal Effects") legend(position(6))
+
+. graph export "images_en/scenario10_margins.png", width(1200) replace
+file images_en/scenario10_margins.png saved as PNG format
+
+. 
+. disp "=== 所有图片重制完成 ==="
+=== 所有图片重制完成 ===
+
+. disp "中文图片：images_zh/"
+中文图片：images_zh/
+
+. disp "英文图片：images_en/"
+英文图片：images_en/
+
+. 
+end of do-file
+
+. log close
+      name:  <unnamed>
+       log:  C:\Users\jefeer\Downloads\opencode\.statamcp\stata-mcp-log\2026050
+> 9134220.log
+  log type:  text
+ closed on:   9 May 2026, 13:43:30
+-------------------------------------------------------------------------------
+
+. exit, STATA
+
+end of do-file

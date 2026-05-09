@@ -52,7 +52,11 @@
       "Bash(mkdir -p investment/docs)",
       "Bash(mv bond_duration_guide.md bond_price_yield.md investment/docs/)",
       "Bash(git show *)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "WebFetch(domain:repec.sowi.unibe.ch)",
+      "WebFetch(domain:medium.com)",
+      "mcp__stata-mcp__stata_do",
+      "mcp__stata-mcp__read_log"
     ]
   }
 }
