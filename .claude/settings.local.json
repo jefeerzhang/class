@@ -37,7 +37,22 @@
       "Bash(npx *)",
       "Bash(start *)",
       "Bash(git *)",
-      "Bash(grep -E \"\\(\\\\.py$|\\\\.txt$|\\\\.md$\\)\")"
+      "Bash(grep -E \"\\(\\\\.py$|\\\\.txt$|\\\\.md$\\)\")",
+      "WebFetch(domain:www.gov.cn)",
+      "Bash(rm -f \"C:/Users/jefeer/.claude/skills/llm-wiki\")",
+      "Bash(rm -rf \"C:/Users/jefeer/.skillshub/llm-wiki/\")",
+      "WebFetch(domain:www.moa.gov.cn)",
+      "Bash(uvx --help)",
+      "Bash(uv pip *)",
+      "Bash(pip search *)",
+      "Bash(claude mcp *)",
+      "Bash(PYTHONIOENCODING=utf-8 python *)",
+      "Bash(rmdir './-p/')",
+      "Bash(rm -f output.txt temp_table.txt)",
+      "Bash(mkdir -p investment/docs)",
+      "Bash(mv bond_duration_guide.md bond_price_yield.md investment/docs/)",
+      "Bash(git show *)",
+      "Read(//tmp/**)"
     ]
   }
 }

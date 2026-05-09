@@ -98,10 +98,56 @@ opencode/
 │   └── scripts/                # Python 脚本
 ├── cluster_analysis/           # 聚类分析项目
 │   ├── docs/                   # 文档（聚类算法指南）
-│   └── （其他目录待创建）
-├── CLAUDE.md                   # 项目说明
+├── credit_default_simulation/  # 信用违约模拟项目
+│   ├── credit_default_analysis.py
+│   ├── credit_default_analysis.ipynb
+│   ├── generate_data.py
+│   ├── generate_data_v2.py
+│   ├── credit_data.csv
+│   └── README.md
+├── investment/                 # 投资分析项目
+│   ├── assets/
+│   ├── cluster_analysis/
+│   ├── credit_rationing/
+│   ├── data/
+│   ├── docs/
+│   ├── notebooks/
+│   ├── regression_analysis/
+│   ├── scripts/
+│   └── tree_analysis/
+├── slides_bond-price-yield/    # 债券价格与收益率幻灯片
+│   └── 05_final/
+├── slides_clustering-guide/    # 聚类指南幻灯片
+│   └── 05_final/
+├── slides_credit-rationing/    # 信贷配给幻灯片
+│   ├── 01_analysis/
+│   ├── 02_drafts/
+│   ├── 03_reviews/
+│   ├── 04_exports/
+│   └── 05_final/
+├── slides_regression/          # 回归分析幻灯片
+│   ├── cross_validation_demo.py
+│   ├── evaluation_metrics.py
+│   ├── images/
+│   ├── 正则化、降维、交叉检验与模型选择.md
+│   └── 正则化、降维、交叉检验与模型选择.pdf
+├── slides_regression-analysis-guide/ # 回归分析指南幻灯片
+│   ├── 05_final/
+│   └── scripts/
+├── skills/                     # AI 技能目录
+│   ├── humanizer/
+│   ├── marp-slides-creator/
+│   └── self-improving-agent/
+├── logs/                       # 日志
+├── 论文提取/                   # 学术论文提取
+├── .learnings/                 # AI 自我改进记录
+├── CLAUDE.md                   # 项目说明（DeepSeek / Claude）
+├── QWEN.md                     # 项目说明（Qwen）
 ├── README.md                   # 项目介绍
-└── requirements.txt            # Python 依赖
+├── requirements.txt            # Python 依赖
+├── bond_price_yield.md         # 债券价格与收益率笔记
+├── density_review.md           # 密度评审
+└── report.md                   # 报告
 ```
 
 ## Running the Scripts

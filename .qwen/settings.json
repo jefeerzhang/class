@@ -27,8 +27,9 @@
       "Bash(where *)",
       "Bash(qwen *)",
       "Bash(chcp *)",
-      "Bash(start *)"
+      "Bash(start *)",
+      "WebFetch(www.gov.cn)"
     ]
   },
-  "$version": 3
+  "$version": 4
 }
