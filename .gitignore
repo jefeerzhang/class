@@ -29,3 +29,6 @@ desktop.ini
 *.orig
 
 .learnings/
+
+chat_export_*.md
+ppt-master/
