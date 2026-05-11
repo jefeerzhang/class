@@ -56,7 +56,11 @@
       "WebFetch(domain:repec.sowi.unibe.ch)",
       "WebFetch(domain:medium.com)",
       "mcp__stata-mcp__stata_do",
-      "mcp__stata-mcp__read_log"
+      "mcp__stata-mcp__read_log",
+      "Bash(python3 skills/ppt-master/scripts/project_manager.py init bond_duration_guide --format ppt169)",
+      "Bash(python3 *)",
+      "Bash(grep -iE \"^clock\\\\.svg$|^calculator\\\\.svg$|^chart-line\\\\.svg$|^shield\\\\.svg$|^bulb\\\\.svg$|^check\\\\.svg$|^book\\\\.svg$|^target\\\\.svg$|^eye\\\\.svg$|^scale\\\\.svg$|^math\\\\.svg$|^function\\\\.svg$|^ab\\\\.svg$|^brain\\\\.svg$|^school\\\\.svg$|^coin\\\\.svg$|^cash\\\\.svg$|^chart-bar\\\\.svg$|^arrows-split\\\\.svg$|^arrow-right\\\\.svg$|^stack\\\\.svg$|^pencil\\\\.svg$|^note\\\\.svg$|^graph\\\\.svg$|^sigma\\\\.svg$|^sum\\\\.svg$\")",
+      "Bash(grep *)"
     ]
   }
 }
