@@ -91,13 +91,6 @@ opencode/
 ├── behavioral_finance/         # 行为公司金融项目
 │   ├── docs/                   # 文档
 │   └── slides/                 # Marp 幻灯片
-├── regression_analysis/        # 回归分析项目
-│   ├── data/                   # 数据集
-│   ├── docs/                   # 文档
-│   ├── notebooks/              # Jupyter 笔记本
-│   └── scripts/                # Python 脚本
-├── cluster_analysis/           # 聚类分析项目
-│   ├── docs/                   # 文档（聚类算法指南）
 ├── credit_default_simulation/  # 信用违约模拟项目
 │   ├── credit_default_analysis.py
 │   ├── credit_default_analysis.ipynb
@@ -115,39 +108,22 @@ opencode/
 │   ├── regression_analysis/
 │   ├── scripts/
 │   └── tree_analysis/
-├── slides_bond-price-yield/    # 债券价格与收益率幻灯片
-│   └── 05_final/
-├── slides_clustering-guide/    # 聚类指南幻灯片
-│   └── 05_final/
-├── slides_credit-rationing/    # 信贷配给幻灯片
-│   ├── 01_analysis/
-│   ├── 02_drafts/
-│   ├── 03_reviews/
-│   ├── 04_exports/
-│   └── 05_final/
-├── slides_regression/          # 回归分析幻灯片
-│   ├── cross_validation_demo.py
-│   ├── evaluation_metrics.py
-│   ├── images/
-│   ├── 正则化、降维、交叉检验与模型选择.md
-│   └── 正则化、降维、交叉检验与模型选择.pdf
-├── slides_regression-analysis-guide/ # 回归分析指南幻灯片
-│   ├── 05_final/
-│   └── scripts/
+├── slides/                     # 课程幻灯片项目
+│   ├── bond-price-yield/       # 债券价格与收益率
+│   ├── clustering-guide/       # 聚类指南
+│   ├── credit-rationing/       # 信贷配给
+│   ├── regression/             # 正则化、降维、交叉验证
+│   └── regression-analysis-guide/
 ├── skills/                     # AI 技能目录
 │   ├── humanizer/
 │   ├── marp-slides-creator/
 │   └── self-improving-agent/
-├── logs/                       # 日志
-├── 论文提取/                   # 学术论文提取
+├── reports/                    # 审查记录和报告
 ├── .learnings/                 # AI 自我改进记录
 ├── CLAUDE.md                   # 项目说明（DeepSeek / Claude）
 ├── QWEN.md                     # 项目说明（Qwen）
 ├── README.md                   # 项目介绍
-├── requirements.txt            # Python 依赖
-├── bond_price_yield.md         # 债券价格与收益率笔记
-├── density_review.md           # 密度评审
-└── report.md                   # 报告
+└── requirements.txt            # Python 依赖
 ```
 
 ## Running the Scripts
@@ -197,14 +173,14 @@ marp behavioral_finance/slides/prospect_theory_slides.md --pdf
 
 ### 聚类分析项目
 
-聚类分析项目包含常用聚类算法的通俗解释和实现，文档在 `cluster_analysis/docs/` 目录。
+聚类分析项目包含常用聚类算法的通俗解释和实现，文档在 `investment/cluster_analysis/docs/` 目录。
 
 ```bash
 # 查看聚类算法通俗指南
-cat cluster_analysis/docs/聚类算法通俗指南.md
+cat investment/cluster_analysis/docs/聚类算法通俗指南.md
 
 # 或在浏览器中查看（如果支持）
-# code cluster_analysis/docs/聚类算法通俗指南.md
+# code investment/cluster_analysis/docs/聚类算法通俗指南.md
 ```
 
 ## Key Libraries

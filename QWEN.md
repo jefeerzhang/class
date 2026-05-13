@@ -40,18 +40,17 @@ opencode/
 │   ├── images/          # 图片
 │   ├── notebooks/       # Jupyter notebooks
 │   └── scripts/         # Python 脚本
-├── behavioral_finance/   # 行为金融学
-│   ├── assets/          # 资源文件
-│   ├── data/            # 数据文件
+├── behavioral_finance/  # 行为金融学
 │   ├── docs/            # 文档
-│   ├── notebooks/       # Jupyter notebooks
-│   └── scripts/         # Python 脚本
-└── investment/          # 投资分析
+│   └── slides/          # 幻灯片
+├── investment/          # 投资分析
     ├── assets/          # 资源文件
     ├── data/            # 数据文件
     ├── docs/            # 文档
-    ├── notebooks/       # Jupyter notebooks
     └── scripts/         # Python 脚本
+├── slides/              # 课程幻灯片项目
+├── reports/             # 审查记录和报告
+└── skills/              # AI 技能目录
 ```
 
 ## 偏好设置

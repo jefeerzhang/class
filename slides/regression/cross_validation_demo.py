@@ -6,6 +6,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+from pathlib import Path
 from sklearn.model_selection import (
     KFold, StratifiedKFold, LeaveOneOut, cross_val_score,
     learning_curve, validation_curve
@@ -21,6 +22,8 @@ plt.rcParams['font.family'] = ['STHeiti']
 plt.rcParams['axes.unicode_minus'] = False
 
 np.random.seed(42)
+OUTPUT_DIR = Path(__file__).resolve().parent / "images"
+OUTPUT_DIR.mkdir(exist_ok=True)
 
 # ============================================================
 # 图1: K-Fold 交叉验证示意图
@@ -63,7 +66,7 @@ for fold_idx, (train_idx, val_idx) in enumerate(kf.split(indices)):
 axes[-1].set_xlabel('样本编号', fontsize=11)
 fig.suptitle('5-Fold 交叉验证数据划分示意图', fontsize=14, fontweight='bold')
 plt.tight_layout()
-plt.savefig('slides_regression/images/kfold_diagram.png', dpi=150, bbox_inches='tight')
+plt.savefig(OUTPUT_DIR / 'kfold_diagram.png', dpi=150, bbox_inches='tight')
 plt.close()
 
 # ============================================================
@@ -103,7 +106,7 @@ ax.annotate('K=5: 常用选择\n偏差-方差平衡好', xy=(5, cv_means[1]),
             arrowprops=dict(arrowstyle='->', color='gray'))
 
 plt.tight_layout()
-plt.savefig('slides_regression/images/k_comparison.png', dpi=150, bbox_inches='tight')
+plt.savefig(OUTPUT_DIR / 'k_comparison.png', dpi=150, bbox_inches='tight')
 plt.close()
 
 # ============================================================
@@ -152,7 +155,7 @@ if gap > 0.05:
                 arrowprops=dict(arrowstyle='->', color='gray'))
 
 plt.tight_layout()
-plt.savefig('slides_regression/images/learning_curve.png', dpi=150, bbox_inches='tight')
+plt.savefig(OUTPUT_DIR / 'learning_curve.png', dpi=150, bbox_inches='tight')
 plt.close()
 
 # ============================================================
@@ -204,7 +207,7 @@ ax.legend(loc='lower left', fontsize=11)
 ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig('slides_regression/images/validation_curve.png', dpi=150, bbox_inches='tight')
+plt.savefig(OUTPUT_DIR / 'validation_curve.png', dpi=150, bbox_inches='tight')
 plt.close()
 
 # ============================================================
@@ -244,7 +247,7 @@ for idx, (name, scores) in enumerate(results.items()):
 
 fig.suptitle('不同交叉验证策略的对比（不平衡数据集）', fontsize=14, fontweight='bold')
 plt.tight_layout()
-plt.savefig('slides_regression/images/cv_strategies.png', dpi=150, bbox_inches='tight')
+plt.savefig(OUTPUT_DIR / 'cv_strategies.png', dpi=150, bbox_inches='tight')
 plt.close()
 
-print("所有图片已保存到 slides_regression/images/")
+print(f"所有图片已保存到 {OUTPUT_DIR}")

@@ -95,19 +95,19 @@ allowed-tools: Read, Write, Edit, Bash, Task, Glob, question
    - 根据用户提供的主题/文件名确定项目名称
    - 使用简短的英文或拼音命名，用连字符连接
    - 示例：`academic-writing`、`ai-introduction`、`product-launch`
-   - 如果用户已有项目目录（如 `slides_regression`），优先复用现有目录
+   - 如果用户已有项目目录（如 `slides/regression`），优先复用现有目录
 
 4. **创建工作文件夹结构**：
    ```bash
    # 创建主工作文件夹
-   mkdir -p slides_[项目名]/05_final
-   mkdir -p slides_[项目名]/images    # 图片资源存放目录
+   mkdir -p slides/[项目名]/05_final
+   mkdir -p slides/[项目名]/images    # 图片资源存放目录
    ```
 
 5. **文件夹结构说明**：
 
    ```text
-   slides_[项目名]/
+   slides/[项目名]/
    ├── images/                # 图片资源（与 .md 同级引用）
    │   └── figure_1.png
    └── 05_final/              # 最终产出
@@ -296,13 +296,13 @@ allowed-tools: Read, Write, Edit, Bash, Task, Glob, question
 - 公式较多时，每页不超过 2-3 个块级公式
 
 **图片引用规范**：
-- 图片统一放在 `slides_[项目名]/images/` 目录
+- 图片统一放在 `slides/[项目名]/images/` 目录
 - 引用方式：`![描述](./images/figure_1.png)`
 - 导出 PDF 时必须使用 `--allow-local-files` 参数
 
 **文件保存**：
 
-- 保存初稿：`slides_[项目名]/05_final/presentation.md`
+- 保存初稿：`slides/[项目名]/05_final/presentation.md`
 
 ### 阶段四：审阅与优化
 
@@ -327,7 +327,7 @@ Task 工具参数：
 [插入用户提出的具体要求和偏好]
 
 ## Slides 初稿
-[插入 slides_[项目名]/05_final/presentation.md 的内容]
+[插入 slides/[项目名]/05_final/presentation.md 的内容]
 
 ## 审阅维度
 
@@ -363,7 +363,7 @@ Task 工具参数：
 3. 给出可直接应用的修改建议
 4. 如果问题较少，可直接输出修正后的完整 slides 内容
 
-将审阅报告保存到 slides_[项目名]/review_report.txt
+将审阅报告保存到 slides/[项目名]/review_report.txt
 ```
 
 **快速模式说明**：
@@ -381,7 +381,7 @@ Task 工具参数：
 **执行步骤**：
 
 1. **确认图片路径**：
-   如果 slides 中引用了本地图片，确保图片放在 `slides_[项目名]/images/` 目录下，且引用路径为相对路径：
+   如果 slides 中引用了本地图片，确保图片放在 `slides/[项目名]/images/` 目录下，且引用路径为相对路径：
    ```markdown
    ![描述](./images/figure_1.png)
    ```
@@ -390,7 +390,7 @@ Task 工具参数：
 
    ```bash
    # 切换到项目目录，确保相对路径正确解析
-   cd slides_[项目名]
+   cd slides/[项目名]
 
    # 导出HTML预览版本
    npx @marp-team/marp-cli 05_final/presentation.md -o 05_final/slides.html --html --theme-set ./themes/
@@ -406,9 +406,9 @@ Task 工具参数：
 
 **最终产出**：
 
-- `slides_[项目名]/05_final/presentation.md` - 最终Markdown
-- `slides_[项目名]/05_final/slides.html` - HTML预览版本
-- `slides_[项目名]/05_final/slides.pdf` - PDF版本
+- `slides/[项目名]/05_final/presentation.md` - 最终 Markdown
+- `slides/[项目名]/05_final/slides.html` - HTML 预览版本
+- `slides/[项目名]/05_final/slides.pdf` - PDF 版本
 
 **输出**：告知用户终稿文件位置和预览方式
 
@@ -546,7 +546,7 @@ header: '你的课程/演讲标题'
 
 ```bash
 # 先进入项目目录（确保相对路径正确）
-cd slides_[项目名]
+cd slides/[项目名]
 
 # 预览（启动本地服务器）
 npx @marp-team/marp-cli -s 05_final/presentation.md --theme-set ./themes/
@@ -587,7 +587,7 @@ Windows 环境下路径使用反斜杠或正斜杠均可，但建议统一使用
 
 ```bash
 # Windows - 统一使用正斜杠
-slides_project-name/05_final/presentation.md
+slides/project-name/05_final/presentation.md
 ```
 
 ## 禁止事项

@@ -1,93 +1,93 @@
 # opencode
 
-个人学习代码仓库：面向金融产品场景的数据分析与关联规则挖掘（Market Basket / Association Rule Mining），并包含行为金融与投资相关的笔记/幻灯片。
+个人学习代码仓库，主要放金融数据分析、投资学、行为金融、计量方法和课程幻灯片相关材料。仓库里既有可运行脚本，也有 Markdown 讲义、PDF/HTML 幻灯片和少量 AI 助手技能文件。
 
 ## 目录结构
 
-```
+```text
 opencode/
-├── association_rules/              # 关联规则分析项目
-│   ├── data/                       # 数据文件（示例 CSV）
-│   ├── docs/                       # 文档（指南/报告）
-│   ├── images/                     # 输出图表（脚本生成）
-│   ├── notebooks/                  # Jupyter 笔记本
-│   └── scripts/                    # Python 脚本（数据生成/分析/可视化）
-├── behavioral_finance/             # 行为金融
-│   ├── docs/                       # 读书笔记
-│   └── slides/                     # Marp 幻灯片（md/html）
-├── investment/                     # 投资相关笔记/材料
-│   └── （md/html/pdf 等文件）
-├── regression_analysis/            # 回归分析项目
-│   ├── data/                       # 数据文件
-│   ├── docs/                       # 文档（回归分析指南）
-│   ├── notebooks/                  # Jupyter 笔记本
-│   └── scripts/                    # Python 脚本
-├── cluster_analysis/               # 聚类分析项目
-│   ├── docs/                       # 文档（聚类算法指南）
-│   └── （其他目录待创建）
-├── requirements.txt                # Python 依赖（用于 association_rules）
-└── CLAUDE.md                       # 项目运行入口索引（面向 AI 助手）
+├── association_rules/                  # 金融产品关联规则分析
+│   ├── data/                           # 示例交易数据
+│   ├── docs/                           # 指南与分析报告
+│   ├── images/                         # 可视化输出
+│   ├── notebooks/                      # Jupyter Notebook
+│   └── scripts/                        # 数据生成、规则挖掘、可视化脚本
+├── behavioral_finance/                 # 行为金融讲义、论文笔记与幻灯片
+├── credit_default_simulation/          # 信用违约模拟数据与分析脚本
+├── investment/                         # 投资学资料
+│   ├── assets/                         # 图片、PDF、HTML 资源
+│   ├── cluster_analysis/               # 聚类分析讲义
+│   ├── credit_rationing/               # 信贷配给材料
+│   ├── data/                           # 投资分析示例数据
+│   ├── docs/                           # 投资学笔记与讲义
+│   ├── regression_analysis/            # 回归分析材料
+│   ├── scripts/                        # 数据处理和分析脚本
+│   └── tree_analysis/                  # 树模型讲义与演示脚本
+├── slides/                             # 课程幻灯片项目
+│   ├── bond-price-yield/
+│   ├── clustering-guide/
+│   ├── credit-rationing/
+│   ├── regression/
+│   └── regression-analysis-guide/
+├── skills/                             # 本仓库保存的 Codex/Claude 技能包
+├── reports/                            # 生成过程中的审查记录和报告
+├── requirements.txt                    # Python 依赖
+├── CLAUDE.md                           # 面向 Claude 的项目索引
+└── QWEN.md                             # 面向 Qwen 的项目索引
 ```
 
 ## 快速开始
 
-建议使用独立环境（conda/venv 均可）。
+建议使用独立环境。
 
 ```bash
-# 进入项目目录
 cd opencode
-
-# 安装依赖
 pip install -r requirements.txt
 ```
 
-### 关联规则项目（association_rules）
+## 常用入口
+
+关联规则项目：
 
 ```bash
-# 1) 生成模拟客户-产品交易数据
 python association_rules/scripts/01_data/generate_customer_data.py
-
-# 2) 金融产品关联分析（Apriori/规则生成）
 python association_rules/scripts/02_analysis/finance_analysis.py
-
-# 3) FP-Growth 分析示例
 python association_rules/scripts/02_analysis/fpgrowth_analysis.py
-
-# 4) 生成可视化图表（输出到 association_rules/images）
 python association_rules/scripts/03_visualization/visualize_rules.py
 ```
 
-### Notebook
+投资学聚类分析：
+
+```bash
+python investment/scripts/generate_bank_data.py
+python investment/scripts/kmeans_analysis.py
+```
+
+信用违约模拟：
+
+```bash
+python credit_default_simulation/generate_data.py
+python credit_default_simulation/credit_default_analysis.py
+```
+
+Notebook：
 
 ```bash
 jupyter notebook association_rules/notebooks/algorithm_comparison.ipynb
 ```
 
-## 主要依赖
+## 本地工具与忽略目录
 
-见 [requirements.txt](./requirements.txt)，主要包含：`pandas`、`numpy`、`mlxtend`、`scikit-learn`、`matplotlib`、`networkx`、`jupyter` 等。
+以下目录属于本地工具、缓存或外部项目副本，不作为主仓库内容维护：
 
-## 聚类分析项目
+- `.learnings/`
+- `.statamcp/`
+- `.uploads/`
+- `ppt-master/`
 
-聚类分析项目包含常用聚类算法的通俗解释和实现，包括：
-
-### 文档
-- **聚类算法通俗指南**：[cluster_analysis/docs/聚类算法通俗指南.md](./cluster_analysis/docs/聚类算法通俗指南.md)
-  - DBSCAN密度聚类算法的通俗理解
-  - 层次聚类算法的通俗理解
-  - 算法对比和选择指南
-
-### 特点
-- **生活化比喻**：用城市人群分布、家族树、班级合并等例子解释算法
-- **实际案例**：客户细分、社交圈层等实际应用场景
-- **参数选择指南**：提供不同数据特征的参数选择建议
-- **代码示例**：Python实现示例
-
-### 适用场景
-- **DBSCAN**：不规则形状的簇、有噪声的数据、不知道簇数量的情况
-- **层次聚类**：需要层次结构、需要可视化、小数据集
+这些目录已写入 `.gitignore`。其中 `ppt-master/` 体量较大，当前保留在工作区，作为独立工具使用。
 
 ## 说明
 
-- 本仓库偏学习与复现实验，脚本输出默认在各子目录（如 `association_rules/images`）。
-- 更完整的脚本入口清单见 [CLAUDE.md](./CLAUDE.md)。
+- 本仓库偏学习、备课和复现实验，脚本输出通常保存在各自子目录中。
+- 更完整的脚本入口和资料索引见 [CLAUDE.md](./CLAUDE.md)。

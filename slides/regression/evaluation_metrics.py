@@ -7,6 +7,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from pathlib import Path
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import (
@@ -21,6 +22,8 @@ plt.rcParams['font.family'] = ['STHeiti']
 plt.rcParams['axes.unicode_minus'] = False
 
 np.random.seed(42)
+OUTPUT_DIR = Path(__file__).resolve().parent / "images"
+OUTPUT_DIR.mkdir(exist_ok=True)
 n = 500
 
 # 模拟客户特征
@@ -91,7 +94,7 @@ output_lines.append(f"True Positives  (TP): {tp}")
 output = "\n".join(output_lines)
 print(output)
 
-with open('slides_regression/images/evaluation_output.txt', 'w', encoding='utf-8') as f:
+with open(OUTPUT_DIR / 'evaluation_output.txt', 'w', encoding='utf-8') as f:
     f.write(output)
 
 # 图1: 混淆矩阵热力图
@@ -117,7 +120,7 @@ for i in range(cm.shape[0]):
                 ha='center', va='center', color=color, fontsize=16)
 
 plt.tight_layout()
-plt.savefig('slides_regression/images/confusion_matrix.png', dpi=150)
+plt.savefig(OUTPUT_DIR / 'confusion_matrix.png', dpi=150)
 plt.close()
 
 # 图2: ROC 曲线
@@ -135,7 +138,7 @@ ax.set_ylim([-0.02, 1.02])
 ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig('slides_regression/images/roc_curve.png', dpi=150)
+plt.savefig(OUTPUT_DIR / 'roc_curve.png', dpi=150)
 plt.close()
 
-print("\n图片已保存到 slides_regression/images/")
+print(f"\n图片已保存到 {OUTPUT_DIR}")

@@ -29,6 +29,8 @@ desktop.ini
 *.orig
 
 .learnings/
+.statamcp/
+.uploads/
 
 chat_export_*.md
 ppt-master/
