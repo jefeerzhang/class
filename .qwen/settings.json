@@ -28,7 +28,10 @@
       "Bash(qwen *)",
       "Bash(chcp *)",
       "Bash(start *)",
-      "WebFetch(www.gov.cn)"
+      "WebFetch(www.gov.cn)",
+      "WebFetch(token-plan-cn.xiaomimimo.com)",
+      "WebFetch(api.xiaomimimo.com)",
+      "WebFetch(platform.xiaomi.com)"
     ]
   },
   "$version": 4
